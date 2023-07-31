@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
 import SingleKitchenOrder from "./SingleKitchenOrder";
+import KitchenOrdersLists from "./KitchenOrdersLists";
 
 
 // https://www.youtube.com/watch?v=RI9kA09Egas&ab_channel=BenAwad <- needed to create multiple lists
@@ -18,7 +19,7 @@ export default function KitchenOrders() {
     // const [orders, updateOrders] = useState(data)
     
 
-
+    
     useEffect(() => {
         fetch(`http://127.0.0.1:8000/kitchen/test/`)
             .then((response) => response.json())
@@ -39,11 +40,8 @@ export default function KitchenOrders() {
             });
     }, []);
 
-    console.log(orderDone);
-    console.log(orderInProggres);
-    console.log(orderInWatting);
-
     function handleOnDragEnd(result){
+        // Old Function no more used
         if (!result.destination) return;
 
         const items = Array.from(data);
@@ -53,27 +51,88 @@ export default function KitchenOrders() {
         setData(items);
     }
 
+    const handleDragEnd = (result) => {
+        const { destination, source, draggableId } = result;
+
+    
+        if (source.droppableId == destination.droppableId) return;
+    
+        //REMOVE FROM SOURCE ARRAY
+    
+        if (source.droppableId == 1) {
+          setOrderDone(removeItemById(draggableId, orderDone));
+        }
+        else if (source.droppableId == 2){
+            setOrderInProggres(removeItemById(draggableId, orderInProggres));
+        }
+        else if (source.droppableId == 3){
+            setOrderWatting(removeItemById(draggableId, orderInWatting));
+        }
+    
+        // GET ITEM
+    
+        const order = findItemById(draggableId, [...orderDone, ...orderInProggres, ...orderInWatting]);
+        console.log(order);
+    
+        //ADD ITEM
+        if (destination.droppableId == 1) {
+            order.order_status = "DONE"
+            setOrderDone([{ ...order}, ...orderDone]);
+        } else if(destination.droppableId == 2){
+            order.order_status = "IN_PROGRESS"
+            setOrderInProggres([{ ...order}, ...orderInProggres]);
+        } else if(destination.droppableId == 3){
+            order.order_status = "WAITTING"
+            setOrderWatting([{ ...order}, ...orderInWatting]);
+        }
+    };
+    
+    function findItemById(id, array) {
+        return array.find((item) => item.order_id == id);
+    }
+    
+    function removeItemById(id, array) {
+
+        return array.filter((item) => item.order_id != id);
+    }
+
+
+    // console.log(orderInProggres);
+
     return <div className="KitchenOrders">
         
         {loading && <div>Loading orders please wait...</div>}
         {error && (
             <div>{`There is a problem fetching the post data - ${error}`}</div>
         )}
-        <DragDropContext onDragEnd={handleOnDragEnd}>
-            <Droppable droppableId="order" key="dropable">
+        <DragDropContext onDragEnd={handleDragEnd}>
+            <h2 style={{textAlign: "center"}}>Kitchen Board</h2>
+            <div style={{
+                display:"flex",
+                justifyContent:"center",
+                // justifyContent:"space-between",
+                alignItems:"center",
+                flexDirection:"row",
+            }}
+            >
+                <KitchenOrdersLists title={'DONE'} orders={orderDone} id={'1'}/>
+                <KitchenOrdersLists title={'IN_PROGRESS'} orders={orderInProggres} id={'2'}/>
+                <KitchenOrdersLists title={'WAITTING'} orders={orderInWatting} id={'3'}/>
+
+            </div>
+
+
+            {/* <Droppable droppableId="order" key="dropable">
                 {(provided) => (
 
                     // changed data useState into orders
                     <div  {...provided.droppableProps} ref={provided.innerRef}>
                         {data && 
-                            data.map(({order_id,order_status,meal},index) =>
+                            data.map((order,index) =>
 
                                 <SingleKitchenOrder 
-                                order_id={order_id} 
-                                order_status={order_status}
-                                meal={meal}
+                                order={order} 
                                 index={index}
-                                key={order_id}
                                 />
 
                             )
@@ -81,7 +140,7 @@ export default function KitchenOrders() {
                         {provided.placeholder}
                     </div>
                 )}
-            </Droppable>
+            </Droppable> */}
         </DragDropContext>
 
     </div>;

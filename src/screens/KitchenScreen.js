@@ -6,9 +6,9 @@ export default function KitchenScreen(){
     
     return(
         
-            <OrderListWraped>
-                <KitchenOrders />
-            </OrderListWraped>
+            
+        <KitchenOrders />
+            
         
     )
 }
