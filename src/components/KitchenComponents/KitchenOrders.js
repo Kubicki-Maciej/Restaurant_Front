@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
-import SingleKitchenOrder from "./SingleKitchenOrder";
 import KitchenOrdersLists from "./KitchenOrdersLists";
+import OrderCount from "./OrdersCount";
 
 
 // https://www.youtube.com/watch?v=RI9kA09Egas&ab_channel=BenAwad <- needed to create multiple lists
@@ -11,6 +11,8 @@ export default function KitchenOrders() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [err, setErr] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const [orderDone, setOrderDone] = useState([]);
     const [orderInProggres, setOrderInProggres] = useState([]);
@@ -51,6 +53,23 @@ export default function KitchenOrders() {
         setData(items);
     }
 
+    const changeServerOrderDone = (id) =>{
+        
+        console.log(`zostala wywolana funkcja change order ${id}`);
+
+        try{
+            const response =  fetch(`'http://127.0.0.1:8000/kitchen/test_order_done/'${id}`);
+            if (!response.ok) {
+                throw new Error(`Error! status: ${response.status}`);
+            }
+            
+        }catch (err){
+            setErr(err.message);
+        }finally{
+            setIsLoading(false);
+        }
+    }
+
     const handleDragEnd = (result) => {
         const { destination, source, draggableId } = result;
 
@@ -68,6 +87,8 @@ export default function KitchenOrders() {
         else if (source.droppableId == 3){
             setOrderWatting(removeItemById(draggableId, orderInWatting));
         }
+
+        
     
         // GET ITEM
     
@@ -77,12 +98,16 @@ export default function KitchenOrders() {
         //ADD ITEM
         if (destination.droppableId == 1) {
             order.order_status = "DONE"
+            console.log('DODAJEMY DO DONE');
+            // changeServerOrderDone(order.order_id)
             setOrderDone([{ ...order}, ...orderDone]);
         } else if(destination.droppableId == 2){
             order.order_status = "IN_PROGRESS"
+            console.log(order.order_id);
             setOrderInProggres([{ ...order}, ...orderInProggres]);
         } else if(destination.droppableId == 3){
             order.order_status = "WAITTING"
+            console.log(order.order_id);
             setOrderWatting([{ ...order}, ...orderInWatting]);
         }
     };
@@ -92,9 +117,10 @@ export default function KitchenOrders() {
     }
     
     function removeItemById(id, array) {
-
         return array.filter((item) => item.order_id != id);
     }
+
+
 
 
     // console.log(orderInProggres);
@@ -121,27 +147,8 @@ export default function KitchenOrders() {
 
             </div>
 
-
-            {/* <Droppable droppableId="order" key="dropable">
-                {(provided) => (
-
-                    // changed data useState into orders
-                    <div  {...provided.droppableProps} ref={provided.innerRef}>
-                        {data && 
-                            data.map((order,index) =>
-
-                                <SingleKitchenOrder 
-                                order={order} 
-                                index={index}
-                                />
-
-                            )
-                        }
-                        {provided.placeholder}
-                    </div>
-                )}
-            </Droppable> */}
         </DragDropContext>
+        <OrderCount waitingOrders={orderInWatting} inProgressOrders={orderInProggres}></OrderCount>
 
     </div>;
 

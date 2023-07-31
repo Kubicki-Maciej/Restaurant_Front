@@ -15,8 +15,8 @@ export const HeaderWindowOrder = styled.div`
     margin-bottom: 5px;
     border: 1px black solid;
     
-    background-color: ${props => props.bg === "green" ? "lightgreen" : "lightyellow"};
-    color: ${props => props.bg === "green" ? "darkgreen" : "brown"};
+    background-color: ${props => props.bg};
+
 `;
 
 export const OrderIdText = styled.p`

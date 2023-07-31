@@ -2,15 +2,16 @@ import { WindowWraper, OrderIdText, StatusText, HeaderWindowOrder } from "./styl
 import OrderButtonContainer from "./OrderButtonConteiner"
 export default function SingleKitchenOrderInformationWithButton({order_id, order_status, meal}){
     
+    
     function getColor(){
         if(order_status=='DONE'){
-            return 'green'
+            return '#39FF84'
         }
-        else if(order_status="WAITING"){
-            return 'yellow'
+        else if(order_status=="WAITING"){
+            return '#FFC239'
         }
-        else if(order_status="ON_PROGRESS"){
-            return 'green'
+        else if(order_status=="IN_PROGRESS"){
+            return '#D9FF39'
         }
     }
     
