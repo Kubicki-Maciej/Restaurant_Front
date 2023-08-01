@@ -54,8 +54,7 @@ export default function MealCounter({data}) {
         {meals_object['meals'].map(({meal_id, number_of_meals, comments, meal_name})=>
             (   
                 <div>
-                    <div>Nazwa : {meal_name}</div>
-                    <div>Liczba : {number_of_meals}</div>
+                    <div>Nazwa : {meal_name} Liczba : {number_of_meals}</div>
                     <div> Comments: {comments}</div>
                     
 

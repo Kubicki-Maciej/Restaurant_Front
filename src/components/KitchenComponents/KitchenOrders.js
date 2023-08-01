@@ -23,7 +23,7 @@ export default function KitchenOrders() {
 
     
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/kitchen/test/`)
+        fetch(`http://127.0.0.1:8000/kitchen/get_orders/`)
             .then((response) => response.json())
             .then((actualData) => 
                 {
@@ -58,7 +58,7 @@ export default function KitchenOrders() {
         console.log(`zostala wywolana funkcja change order ${id}`);
 
         try{
-            const response =  fetch(`'http://127.0.0.1:8000/kitchen/test_order_done/'${id}`);
+            const response =  fetch(`'http://127.0.0.1:8000/kitchen/change_order_done/'${id}`);
             if (!response.ok) {
                 throw new Error(`Error! status: ${response.status}`);
             }

@@ -11,6 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/kitchen" element={ <KitchenScreen />}/>
+          <Route path="/kitchen" element={ <KitchenScreen />}/>
         </Routes>
       </BrowserRouter>
     </div>

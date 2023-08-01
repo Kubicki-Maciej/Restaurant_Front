@@ -31,8 +31,8 @@ export default function SingleKitchenOrderInformationWithButton({order_id, order
                 </li>)
             )}
             </ul>
-            <OrderButtonContainer api_url={'http://127.0.0.1:8000/kitchen/test_order_done/'} order_id={order_id} button_name={"Done"}/>
-            <OrderButtonContainer api_url={'http://127.0.0.1:8000/kitchen/test_in_progress/'} order_id={order_id} button_name={"In Progress"}/>
+            <OrderButtonContainer api_url={'http://127.0.0.1:8000/kitchen/change_order_done/'} order_id={order_id} button_name={"Done"}/>
+            <OrderButtonContainer api_url={'http://127.0.0.1:8000/kitchen/change_order_in_progress/'} order_id={order_id} button_name={"In Progress"}/>
         </WindowWraper>
     )
 }
