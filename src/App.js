@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route,} from 'react-router-dom'
 import './App.css';
 
 import KitchenScreen from './screens/KitchenScreen';
+import LoginScreen from './screens/LoginScreen';
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/kitchen" element={ <KitchenScreen />}/>
-          <Route path="/kitchen" element={ <KitchenScreen />}/>
+          <Route path="/login" element={ <LoginScreen />}/>
+          <Route path="/register" element={ <LoginScreen />}/>
+
         </Routes>
       </BrowserRouter>
     </div>
