@@ -13,6 +13,6 @@ const client = axios.create({
 
 export default function CreateNewOrder() {
   return (
-    <div>CreateNewOrder</div>
+    <div>CreateNewOrder App</div>
   )
 }
