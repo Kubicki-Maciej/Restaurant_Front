@@ -90,3 +90,60 @@ export const LoginWindow = styled.div`
     display: flex;
     flex-direction: column;
 `;
+
+
+export const ButtonSlide = styled.button`
+    border: 2px ${mainColor} solid;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.8s;
+    &:hover{
+        box-shadow: 11px 13px 20px 9px rgba(0,0,0,0.1);
+        left:0;
+    }
+    
+`
+
+export const SlideButton = styled.button`
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+
+  padding: 10px 20px;
+
+  color: white;
+
+  background-color: ${shadeTwoMainColor};
+  border: 2px ${mainColor} solid;
+  border-radius: 5px;
+  cursor: pointer;
+  
+  transition: background-color 0.5s ease;
+
+  &:hover {
+    background-color: ${shadeFourMainColor};
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: ${shadeFourMainColor};
+    transition: left 0.3s ease;
+  }
+
+  &:hover:before {
+    left: 0;
+  }
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+`;

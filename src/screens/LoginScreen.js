@@ -1,13 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { LoginWindow, WindowContainer, LoginLogo, FormControl, ButtonSubmit, FormBox, MainWindow} from './style/LoginScreenElements';
+import { LoginWindow, WindowContainer, LoginLogo, FormControl, ButtonSubmit, SlideButton, FormBox, MainWindow} from './style/LoginScreenElements';
 import restaurantImg from '../images/restaurant.jpg'
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
-
 
 const client = axios.create({
     baseURL: "http://127.0.0.1:8000/"
@@ -117,9 +116,9 @@ export default function LoginScreen() {
                             <form>Password</form>
                             <input type="password" placeholder="Password" value=  {password} onChange={e => setPassword(e.target.value)} />
                         </FormControl>
-                        <ButtonSubmit variant="primary" type="submit">
-                          Submit
-                        </ButtonSubmit>
+                        <SlideButton variant="primary" type="submit">
+                            <span>Login</span>
+                        </SlideButton>
                     </FormBox>
                 </LoginWindow>
                 
