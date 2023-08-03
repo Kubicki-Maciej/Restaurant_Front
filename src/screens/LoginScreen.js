@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { LoginWindow, WindowContainer, LoginLogo, FormControl, ButtonSubmit, SlideButton, FormBox, MainWindow} from './style/LoginScreenElements';
 import restaurantImg from '../images/restaurant.jpg'
+import {useNavigate} from 'react-router-dom'
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -18,7 +19,10 @@ export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [userInformation, setUserInformation] = useState()
+    const [userInformation, setUserInformation] = useState(null)
+    
+    
+    const navigate = useNavigate();
 
     useEffect(()=>{
         client.get("api/user")
@@ -59,7 +63,9 @@ export default function LoginScreen() {
             )   
                 .then(function(res) {
                     setCurrentUser(true);
-            });
+                    
+            })
+
         });
     }
 
@@ -74,7 +80,9 @@ export default function LoginScreen() {
         )
             .then(function(res) {
                 setCurrentUser(true);
-        });
+                setUserInformation(res.data)                
+            })           
+
     }
 
     function submitLogout(e) {
@@ -89,6 +97,10 @@ export default function LoginScreen() {
     }
 
     if (currentUser){
+        console.log(currentUser);
+        console.log(userInformation);
+        // create navigate for kitchen waiter manager 
+
         return(
             <div>
                 <h1>Użytkownik jest zalogowany {username}</h1>
@@ -121,10 +133,6 @@ export default function LoginScreen() {
                         </SlideButton>
                     </FormBox>
                 </LoginWindow>
-                
-
-                    
-               
             </WindowContainer>
         </MainWindow>
     </div>

@@ -4,6 +4,7 @@ import './App.css';
 
 import KitchenScreen from './screens/KitchenScreen';
 import LoginScreen from './screens/LoginScreen';
+import WaiterScreen from './screens/WaiterScreen';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/kitchen" element={ <KitchenScreen />}/>
+          <Route path="/waiter" element={ <WaiterScreen />}/>
           <Route path="/login" element={ <LoginScreen />}/>
           <Route path="/register" element={ <LoginScreen />}/>
 

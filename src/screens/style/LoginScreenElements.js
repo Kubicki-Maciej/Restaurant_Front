@@ -21,8 +21,7 @@ export const FormBox = styled.form`
 
         justify-content: center;
         align-items: center;
-
-`
+`;
 export const LoginLogo = styled.h1`
     background-color: ${shadeThreeMainColor};
     border: 2px ${shadeFourMainColor} solid ;
@@ -33,21 +32,20 @@ export const LoginLogo = styled.h1`
     margin-top: 30px;
     margin-bottom: 30px;
     
-`
+`;
 export const FormControl = styled.form`
     margin: 10px 15px 20px 15px;
     background-color: ${shadeTwoMainColor};
     font-size: 14px;
     border: 2px ${shadeFourMainColor} solid ;
     border-radius: 5px;
-`
+`;
 export const ButtonSubmit = styled.button`
     align-items: center;
     background-color: ${lightMainColor};
     border: 2px ${mainColor} solid;
     margin: 0 15px 10px 15px;
-
-`
+`;
 export const MainWindow =styled.div`
     margin-top: 10vh;
     width: 100%;
@@ -58,7 +56,7 @@ export const MainWindow =styled.div`
     align-items: center;
 
     flex-direction: row;
-`
+`;
 export const WindowContainer = styled.div`
     width: 80vw;
     height: 60vh;
@@ -75,8 +73,7 @@ export const WindowContainer = styled.div`
     align-items: center;
     display: flex;
     justify-content: center;  
-`
-
+`;
 export const LoginWindow = styled.div`
     @font-face {
             font-family: Inter;
@@ -90,8 +87,6 @@ export const LoginWindow = styled.div`
     display: flex;
     flex-direction: column;
 `;
-
-
 export const ButtonSlide = styled.button`
     border: 2px ${mainColor} solid;
     border-radius: 5px;
@@ -105,8 +100,7 @@ export const ButtonSlide = styled.button`
         left:0;
     }
     
-`
-
+`;
 export const SlideButton = styled.button`
   position: relative;
   overflow: hidden;
