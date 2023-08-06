@@ -19,7 +19,7 @@ export default function KitchenOrders() {
     const [orderInWatting, setOrderWatting] = useState([]);
 
     // const [orders, updateOrders] = useState(data)
-    
+
 
     
     useEffect(() => {
