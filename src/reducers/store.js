@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux'
-import waiterOrder from './waiterApp'
+import { waiterOrder, waiterCategory } from './waiterApp'
 // reducer import
 
 
-export default allReducers = combineReducers({
+export const allReducers = combineReducers({
     waiterOrder : waiterOrder,
+    waiterCategory:waiterCategory
 })
+

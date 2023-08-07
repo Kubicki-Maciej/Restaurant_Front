@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { legacy_createStore as createStore} from 'redux'
 import { Provider } from 'react-redux';
 
-import allReducers from './reducers/store'
+import {allReducers} from './reducers/store'
 
 const store = createStore(allReducers , window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
