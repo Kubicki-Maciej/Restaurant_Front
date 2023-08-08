@@ -22,13 +22,19 @@ export const waiterOrder = (state=order,action)=>{
     switch(action.type){
         case 'ADD_PRODUCT':
             const item = action.payload
-            const existItem = state.ordered_items.find(x=> x.id === item.id)
+            const existItem = state.ordered_items.find(i=> i.id === item.id)
             if(existItem){
+
+                console.log('item istnieje');
+                let newValue = existItem.number_of_meals+item.number_of_meals
                 return{
-                    ...state,
-                    ordered_items: state.ordered_items.map(x=>
-                        x.id === existItem.id ? existItem.nubmer_of_item : x)
+                    ...order,
+                    ordered_items : state.ordered_items.map(i=>
+                        i.id === item.id ? item : i
+                    )       
                 }
+
+
             }else{
                 return {
                     ...state,
