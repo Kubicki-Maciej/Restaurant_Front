@@ -1,14 +1,41 @@
+export const incrementNumberOfMeal = (state=1, action) =>{
+    
+    switch(action.type){
+        case 'INCREMENT_ITEM':
+            return state +1
+        case 'DECREMENT_ITEM':
+            if(state > 0){
+                return state -1
+            }else{
+                return state
+            }
+            default:
+                return state
+    }
+}
+
 const order = {
     ordered_items: []
 }
+
 export const waiterOrder = (state=order,action)=>{
     switch(action.type){
         case 'ADD_PRODUCT':
             const item = action.payload
-            return {
-                ...state,
-                ordered_items:[...state.ordered_items, item]
+            const existItem = state.ordered_items.find(x=> x.id === item.id)
+            if(existItem){
+                return{
+                    ...state,
+                    ordered_items: state.ordered_items.map(x=>
+                        x.id === existItem.id ? existItem.nubmer_of_item : x)
+                }
+            }else{
+                return {
+                    ...state,
+                    ordered_items:[...state.ordered_items, item]
+                }
             }
+            
         case 'REMOVE_PRODUCT':
             return state +2
         case 'CHANGE_PRODUCT_NUMBER':

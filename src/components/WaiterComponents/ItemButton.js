@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux';
 import { addProduct } from '../../actions/waiterAppAction';
 import Popup from 'reactjs-popup';
+import PopoutItemWindow from './PopoutItemWindow';
 
 export default function ItemButton({itemObject}) {
     console.log('obiekt category button');
@@ -25,9 +26,15 @@ export default function ItemButton({itemObject}) {
       }
     
     return (
-    <ButtonWaiter onClick={handleClick}>
+    <Popup trigger={
+        <ButtonWaiter className='modal' onClick={handleClick}>
+        
         <TextButtonWaiter >{itemObj.meal_name}</TextButtonWaiter> 
     </ButtonWaiter>
+    } modal nested
+    >
+        <PopoutItemWindow item={itemObj}> {itemObj.meal_name}</PopoutItemWindow>
+    </Popup>
     )
 }
 

@@ -1,10 +1,11 @@
 import {combineReducers} from 'redux'
-import { waiterOrder, waiterCategory } from './waiterApp'
+import { waiterOrder, waiterCategory, incrementNumberOfMeal } from './waiterApp'
 // reducer import
 
 
 export const allReducers = combineReducers({
     waiterOrder : waiterOrder,
-    waiterCategory:waiterCategory
+    waiterCategory:waiterCategory,
+    numberOfMeals:incrementNumberOfMeal
 })
 

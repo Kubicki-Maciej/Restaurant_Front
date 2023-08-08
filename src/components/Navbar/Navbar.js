@@ -63,6 +63,9 @@ export default function Navbar() {
                 <NavBarLink>Order List</NavBarLink>
             </NavBarItem>
         </NavBarWraper>
+
+        <div className='CurrentOrder'></div>
+        
     </NavBar>
     )
 }

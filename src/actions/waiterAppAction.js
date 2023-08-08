@@ -1,3 +1,14 @@
+export const incrementFood =()=>{
+    return {
+        type: 'INCREMENT_ITEM'
+    }
+}
+export const decrementFood =()=>{
+    return {
+        type: 'DECREMENT_ITEM'
+    }
+}
+
 export const addProduct = (food) =>{
     return {
         type: 'ADD_PRODUCT',
