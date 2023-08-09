@@ -1,9 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {useSelector, useDispatch} from 'react-redux';
+import {useNavigate} from 'react-router-dom'
+// style
 import { LoginWindow, WindowContainer, LoginLogo, FormControl, ButtonSubmit, SlideButton, FormBox, MainWindow} from './style/LoginScreenElements';
 import restaurantImg from '../images/restaurant.jpg'
-import {useNavigate} from 'react-router-dom'
+
+// Action
+import { loginUser, logoutUser, getUserData, clearUserData } from '../actions/LoginAction';
+
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
@@ -22,6 +28,10 @@ export default function LoginScreen() {
     const [userInformation, setUserInformation] = useState(null)
     
     
+    const dataUserSelection = useSelector(state=>state.userData)
+    const dispatch = useDispatch();
+    
+
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -80,7 +90,11 @@ export default function LoginScreen() {
         )
             .then(function(res) {
                 setCurrentUser(true);
-                setUserInformation(res.data)                
+                setUserInformation(res.data) 
+                console.log(res.data);  
+                dispatch(loginUser())    
+                dispatch(getUserData(res.data
+                ))         
             })           
 
     }
@@ -93,12 +107,25 @@ export default function LoginScreen() {
         )   
             .then(function(res) {
                 setCurrentUser(false);
+                dispatch(logoutUser())               
+                dispatch(clearUserData())               
+
         });
     }
 
     if (currentUser){
-        console.log(currentUser);
-        console.log(userInformation);
+        
+        console.log(dataUserSelection);
+        if (dataUserSelection.role === 'kitchen'){
+            navigate("/kitchen")
+
+        }if (dataUserSelection.role === 'waiter') {
+            navigate("/waiter")
+        } 
+        
+        
+        // console.log(currentUser);
+        // console.log(userInformation);
         // create navigate for kitchen waiter manager 
 
         return(

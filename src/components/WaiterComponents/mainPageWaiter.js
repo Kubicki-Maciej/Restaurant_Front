@@ -23,7 +23,7 @@ const client = axios.create({
 
 
 export default function MainPageWaiter() {
-  const orderData = useSelector(state=>state.waiterOrder)
+  
   const categorySelection = useSelector(state=>state.waiterCategory)
   const dispatch = useDispatch();
 

@@ -10,7 +10,7 @@ export const incrementNumberOfMeal = (state=1, action) =>{
                 return state
             }
             default:
-                return state
+                return state=1
     }
 }
 

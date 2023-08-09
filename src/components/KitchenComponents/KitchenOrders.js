@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
+import axios from 'axios';
 import KitchenOrdersLists from "./KitchenOrdersLists";
 import OrderCount from "./OrdersCount";
 
@@ -7,6 +8,17 @@ import OrderCount from "./OrdersCount";
 // https://www.youtube.com/watch?v=RI9kA09Egas&ab_channel=BenAwad <- needed to create multiple lists
 // https://github.com/benawad/react-tier-list/blob/0_react-beautiful-dnd/src/AuthorList.tsx
 // https://egghead.io/lessons/react-conditionally-allow-movement-using-react-beautiful-dnd-draggable-and-droppable-props
+
+
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.withCredentials = true;
+
+const client = axios.create({
+    baseURL: "http://127.0.0.1:8000/"
+});
+
+
 export default function KitchenOrders() {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -93,21 +105,21 @@ export default function KitchenOrders() {
         // GET ITEM
     
         const order = findItemById(draggableId, [...orderDone, ...orderInProggres, ...orderInWatting]);
-        console.log(order);
+        // console.log(order);
     
         //ADD ITEM
         if (destination.droppableId == 1) {
             order.order_status = "DONE"
-            console.log('DODAJEMY DO DONE');
+            // console.log('DODAJEMY DO DONE');
             // changeServerOrderDone(order.order_id)
             setOrderDone([{ ...order}, ...orderDone]);
         } else if(destination.droppableId == 2){
             order.order_status = "IN_PROGRESS"
-            console.log(order.order_id);
+            // console.log(order.order_id);
             setOrderInProggres([{ ...order}, ...orderInProggres]);
         } else if(destination.droppableId == 3){
             order.order_status = "WAITTING"
-            console.log(order.order_id);
+            // console.log(order.order_id);
             setOrderWatting([{ ...order}, ...orderInWatting]);
         }
     };

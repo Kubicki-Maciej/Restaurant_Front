@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {useNavigate} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 
 const NavBar = styled.div`
     
@@ -36,14 +37,32 @@ const HeaderNavBar = styled.h1`
 const NavBarWraper = styled.div`
 
 `
+const MiniOrder = styled.div`
+
+`
+const MiniItem = styled.div`
+
+`
+const ButtonSendOrder = styled.button`
+
+`
 
 
 export default function Navbar() {
     
+    // const selector = useSelector()
     const data = localStorage.getItem('myOrderData');
+    const orderData = useSelector(state=>state.waiterOrder)
+
     function getData(){
         console.log(data);
     }
+
+    function sendToApiDataOrder(){
+        console.log(orderData);
+        console.log('DATA IS SENDED TO BACKEND');
+    }
+
     return (
     <NavBar>
         <HeaderNavBar>NAV BAR</HeaderNavBar>
@@ -61,10 +80,23 @@ export default function Navbar() {
             <NavBarItem>
                 {/* order list is when u create new order here lands all items */}
                 <NavBarLink>Order List</NavBarLink>
+                {
+                   orderData.ordered_items.length > 0 ? 
+                    <MiniOrder>
+                        {orderData.ordered_items.map((item)=>
+                            <MiniItem>
+                                {item.name} :{item.number_of_meals}
+                            </MiniItem>
+                    )}
+                    <ButtonSendOrder onClick={sendToApiDataOrder}>taki przycisk</ButtonSendOrder>
+                    </MiniOrder>
+                        :
+                        ''
+                }
+
             </NavBarItem>
         </NavBarWraper>
 
-        <div className='CurrentOrder'></div>
         
     </NavBar>
     )
