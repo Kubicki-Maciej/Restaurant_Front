@@ -9,11 +9,6 @@ import OrderCount from "./OrdersCount";
 import LogoutButton from "../LoginComponents/Logout";
 
 
-// https://www.youtube.com/watch?v=RI9kA09Egas&ab_channel=BenAwad <- needed to create multiple lists
-// https://github.com/benawad/react-tier-list/blob/0_react-beautiful-dnd/src/AuthorList.tsx
-// https://egghead.io/lessons/react-conditionally-allow-movement-using-react-beautiful-dnd-draggable-and-droppable-props
-
-
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.withCredentials = true;
@@ -21,13 +16,11 @@ axios.defaults.withCredentials = true;
 const client = axios.create({
     baseURL: "http://127.0.0.1:8000/"
 });
-
-
 export default function KitchenOrders() {
     const dataUserSelection = useSelector(state=>state.userData)
     const dataUserStatus = useSelector(state=>state.userLogin)
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -38,31 +31,40 @@ export default function KitchenOrders() {
     const [orderInProggres, setOrderInProggres] = useState([]);
     const [orderInWatting, setOrderWatting] = useState([]);
 
-    // const [orders, updateOrders] = useState(data)
+    function changeOrderInProgress(order_id){
+        client.get(`/kitchen/change_order_in_progress/${order_id}`)
+    }
+    function changeOrderWaiting(order_id){
+        client.get(`/kitchen/change_order_waiting/${order_id}`)
+    }
+    function changeOrderDone(order_id){
+        client.get(`/kitchen/change_order_done/${order_id}`)
+    }
 
+    async function fetchData(){
+        client.get(`/kitchen/get_orders/`)            
+        .then((actualData) => 
+        {
+            setData(actualData.data);
+            setOrderDone(actualData.data.filter((order)=> order.order_status == "DONE"));
+            setOrderInProggres(actualData.data.filter((order)=> order.order_status == "IN_PROGRESS"));
+            setOrderWatting(actualData.data.filter((order)=> order.order_status == "WAITING"));
+        }
+    )
+    .catch((err) => {
+        setError(err.message);
+        setData(null);
+    })
+    .finally(() => {
+        setLoading(false);
+    });
+    }
 
-    
     useEffect(() => {
-        client.get(`/kitchen/get_orders/`)
-            // .then((response) => {
-            //     // response.json()
-            //     response.data
-            // })
-            .then((actualData) => 
-                {
-                    setData(actualData.data);
-                    setOrderDone(actualData.data.filter((order)=> order.order_status == "DONE"));
-                    setOrderInProggres(actualData.data.filter((order)=> order.order_status == "IN_PROGRESS"));
-                    setOrderWatting(actualData.data.filter((order)=> order.order_status == "WAITING"));
-                }
-            )
-            .catch((err) => {
-                setError(err.message);
-                setData(null);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        setInterval(()=>{
+            fetchData();
+        }, 5000)
+
     }, []);
 
     function handleOnDragEnd(result){
@@ -108,16 +110,18 @@ export default function KitchenOrders() {
         const order = findItemById(draggableId, [...orderDone, ...orderInProggres, ...orderInWatting]);
         if (destination.droppableId == 1) {
             order.order_status = "DONE"
-            // console.log('DODAJEMY DO DONE');
-            // changeServerOrderDone(order.order_id)
+            console.log(order.order_id);
             setOrderDone([{ ...order}, ...orderDone]);
+            changeOrderDone(order.order_id)
         } else if(destination.droppableId == 2){
             order.order_status = "IN_PROGRESS"
-            // console.log(order.order_id);
+            console.log(order.order_id);
+            changeOrderInProgress(order.order_id)
             setOrderInProggres([{ ...order}, ...orderInProggres]);
         } else if(destination.droppableId == 3){
             order.order_status = "WAITTING"
-            // console.log(order.order_id);
+            console.log(order.order_id);
+            changeOrderWaiting(order.order_id)
             setOrderWatting([{ ...order}, ...orderInWatting]);
         }
     };
@@ -129,13 +133,9 @@ export default function KitchenOrders() {
     function removeItemById(id, array) {
         return array.filter((item) => item.order_id != id);
     }
-
-    //  Change it later for checker if data user is ...kitchen 
-    // or Owner  
+  
     if(dataUserStatus){
         return (
-
-    
             <div className="KitchenOrders">
                 <LogoutButton client={client}></LogoutButton>
                 
@@ -168,5 +168,4 @@ export default function KitchenOrders() {
     else{
         navigate('../login/', {replace: true})
     }
-    
 }
