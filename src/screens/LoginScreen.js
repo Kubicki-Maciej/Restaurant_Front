@@ -27,11 +27,8 @@ export default function LoginScreen() {
     const [password, setPassword] = useState('');
     const [userInformation, setUserInformation] = useState(null)
     
-    
     const dataUserSelection = useSelector(state=>state.userData)
     const dispatch = useDispatch();
-    
-
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -119,15 +116,10 @@ export default function LoginScreen() {
         if (dataUserSelection.role === 'kitchen'){
             navigate("/kitchen")
 
-        }if (dataUserSelection.role === 'waiter') {
+        }if (dataUserSelection.role === 'waiters') {
             navigate("/waiter")
         } 
         
-        
-        // console.log(currentUser);
-        // console.log(userInformation);
-        // create navigate for kitchen waiter manager 
-
         return(
             <div>
                 <h1>Użytkownik jest zalogowany {username}</h1>

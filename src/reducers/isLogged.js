@@ -38,7 +38,7 @@ export const userData = (state=user, action) =>{
                 groups: userData.groups
             }
         case 'CLEAR_USER_DATA':
-            return state
+            return user
         default:
             return state
     }

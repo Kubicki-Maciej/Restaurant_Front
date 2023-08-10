@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
+import {useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom'
+
 import axios from 'axios';
 import KitchenOrdersLists from "./KitchenOrdersLists";
 import OrderCount from "./OrdersCount";
+import LogoutButton from "../LoginComponents/Logout";
 
 
 // https://www.youtube.com/watch?v=RI9kA09Egas&ab_channel=BenAwad <- needed to create multiple lists
@@ -20,12 +24,16 @@ const client = axios.create({
 
 
 export default function KitchenOrders() {
+    const dataUserSelection = useSelector(state=>state.userData)
+    const dataUserStatus = useSelector(state=>state.userLogin)
+    const navigate = useNavigate();
+
+
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [err, setErr] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
     const [orderDone, setOrderDone] = useState([]);
     const [orderInProggres, setOrderInProggres] = useState([]);
     const [orderInWatting, setOrderWatting] = useState([]);
@@ -35,14 +43,17 @@ export default function KitchenOrders() {
 
     
     useEffect(() => {
-        fetch(`http://127.0.0.1:8000/kitchen/get_orders/`)
-            .then((response) => response.json())
+        client.get(`/kitchen/get_orders/`)
+            // .then((response) => {
+            //     // response.json()
+            //     response.data
+            // })
             .then((actualData) => 
                 {
-                    setData(actualData);
-                    setOrderDone(actualData.filter((order)=> order.order_status == "DONE"));
-                    setOrderInProggres(actualData.filter((order)=> order.order_status == "IN_PROGRESS"));
-                    setOrderWatting(actualData.filter((order)=> order.order_status == "WAITING"));
+                    setData(actualData.data);
+                    setOrderDone(actualData.data.filter((order)=> order.order_status == "DONE"));
+                    setOrderInProggres(actualData.data.filter((order)=> order.order_status == "IN_PROGRESS"));
+                    setOrderWatting(actualData.data.filter((order)=> order.order_status == "WAITING"));
                 }
             )
             .catch((err) => {
@@ -70,7 +81,7 @@ export default function KitchenOrders() {
         console.log(`zostala wywolana funkcja change order ${id}`);
 
         try{
-            const response =  fetch(`'http://127.0.0.1:8000/kitchen/change_order_done/'${id}`);
+            const response =  fetch(`'/kitchen/change_order_done/'${id}`);
             if (!response.ok) {
                 throw new Error(`Error! status: ${response.status}`);
             }
@@ -84,12 +95,7 @@ export default function KitchenOrders() {
 
     const handleDragEnd = (result) => {
         const { destination, source, draggableId } = result;
-
-    
-        if (source.droppableId == destination.droppableId) return;
-    
-        //REMOVE FROM SOURCE ARRAY
-    
+        if (source.droppableId == destination.droppableId) return;    
         if (source.droppableId == 1) {
           setOrderDone(removeItemById(draggableId, orderDone));
         }
@@ -99,15 +105,7 @@ export default function KitchenOrders() {
         else if (source.droppableId == 3){
             setOrderWatting(removeItemById(draggableId, orderInWatting));
         }
-
-        
-    
-        // GET ITEM
-    
         const order = findItemById(draggableId, [...orderDone, ...orderInProggres, ...orderInWatting]);
-        // console.log(order);
-    
-        //ADD ITEM
         if (destination.droppableId == 1) {
             order.order_status = "DONE"
             // console.log('DODAJEMY DO DONE');
@@ -132,36 +130,43 @@ export default function KitchenOrders() {
         return array.filter((item) => item.order_id != id);
     }
 
+    //  Change it later for checker if data user is ...kitchen 
+    // or Owner  
+    if(dataUserStatus){
+        return (
 
-
-
-    // console.log(orderInProggres);
-
-    return <div className="KitchenOrders">
+    
+            <div className="KitchenOrders">
+                <LogoutButton client={client}></LogoutButton>
+                
+                {loading && <div>Loading orders please wait...</div>}
+                {error && (
+                    <div>{`There is a problem fetching the post data - ${error}`}</div>
+                )}
+                <DragDropContext onDragEnd={handleDragEnd}>
+                    <h2 style={{textAlign: "center"}}>Kitchen Board</h2>
+                    <div style={{
+                        display:"flex",
+                        justifyContent:"center",
+                        // justifyContent:"space-between",
+                        alignItems:"center",
+                        flexDirection:"row",
+                    }}
+                    >
+                        <KitchenOrdersLists title={'DONE'} orders={orderDone} id={'1'}/>
+                        <KitchenOrdersLists title={'IN_PROGRESS'} orders={orderInProggres} id={'2'}/>
+                        <KitchenOrdersLists title={'WAITTING'} orders={orderInWatting} id={'3'}/>
         
-        {loading && <div>Loading orders please wait...</div>}
-        {error && (
-            <div>{`There is a problem fetching the post data - ${error}`}</div>
-        )}
-        <DragDropContext onDragEnd={handleDragEnd}>
-            <h2 style={{textAlign: "center"}}>Kitchen Board</h2>
-            <div style={{
-                display:"flex",
-                justifyContent:"center",
-                // justifyContent:"space-between",
-                alignItems:"center",
-                flexDirection:"row",
-            }}
-            >
-                <KitchenOrdersLists title={'DONE'} orders={orderDone} id={'1'}/>
-                <KitchenOrdersLists title={'IN_PROGRESS'} orders={orderInProggres} id={'2'}/>
-                <KitchenOrdersLists title={'WAITTING'} orders={orderInWatting} id={'3'}/>
-
+                    </div>
+        
+                </DragDropContext>
+                <OrderCount waitingOrders={orderInWatting} inProgressOrders={orderInProggres}></OrderCount>
+        
             </div>
-
-        </DragDropContext>
-        <OrderCount waitingOrders={orderInWatting} inProgressOrders={orderInProggres}></OrderCount>
-
-    </div>;
-
+        );
+    }
+    else{
+        navigate('../login/', {replace: true})
+    }
+    
 }

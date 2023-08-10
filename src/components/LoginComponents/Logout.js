@@ -1,7 +1,8 @@
 import React from 'react'
-
-export default function LogoutButton() {
-
+import {useSelector, useDispatch} from 'react-redux';
+import { logoutUser, clearUserData } from '../../actions/LoginAction';
+export default function LogoutButton({client}) {
+    const dispatch = useDispatch();
     function submitLogout(e) {
         e.preventDefault();
         client.post(
@@ -9,7 +10,6 @@ export default function LogoutButton() {
             {withCredentials: true}
         )   
             .then(function(res) {
-                setCurrentUser(false);
                 dispatch(logoutUser())               
                 dispatch(clearUserData())               
         });
