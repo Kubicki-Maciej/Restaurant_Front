@@ -110,17 +110,14 @@ export default function KitchenOrders() {
         const order = findItemById(draggableId, [...orderDone, ...orderInProggres, ...orderInWatting]);
         if (destination.droppableId == 1) {
             order.order_status = "DONE"
-            console.log(order.order_id);
             setOrderDone([{ ...order}, ...orderDone]);
             changeOrderDone(order.order_id)
         } else if(destination.droppableId == 2){
             order.order_status = "IN_PROGRESS"
-            console.log(order.order_id);
             changeOrderInProgress(order.order_id)
             setOrderInProggres([{ ...order}, ...orderInProggres]);
         } else if(destination.droppableId == 3){
             order.order_status = "WAITTING"
-            console.log(order.order_id);
             changeOrderWaiting(order.order_id)
             setOrderWatting([{ ...order}, ...orderInWatting]);
         }
