@@ -45,7 +45,6 @@ export default function KitchenOrdersLists({title, orders, id}) {
                     >
                         {
                             orders.map((order, index)=>(
-                                
                                 <SingleKitchenOrder key={index} index={index} order={order}></SingleKitchenOrder>
                             ))
                         }

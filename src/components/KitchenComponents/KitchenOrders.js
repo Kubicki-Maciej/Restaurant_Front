@@ -112,6 +112,8 @@ export default function KitchenOrders() {
             order.order_status = "DONE"
             setOrderDone([{ ...order}, ...orderDone]);
             changeOrderDone(order.order_id)
+            // create list with items that should disapire ? 
+            // create setTimeout(()=>{client.get(`/kitchen/is_done/${order.order_id}`)},600)
         } else if(destination.droppableId == 2){
             order.order_status = "IN_PROGRESS"
             changeOrderInProgress(order.order_id)
@@ -153,9 +155,7 @@ export default function KitchenOrders() {
                         <KitchenOrdersLists title={'DONE'} orders={orderDone} id={'1'}/>
                         <KitchenOrdersLists title={'IN_PROGRESS'} orders={orderInProggres} id={'2'}/>
                         <KitchenOrdersLists title={'WAITTING'} orders={orderInWatting} id={'3'}/>
-        
                     </div>
-        
                 </DragDropContext>
                 <OrderCount waitingOrders={orderInWatting} inProgressOrders={orderInProggres}></OrderCount>
         
