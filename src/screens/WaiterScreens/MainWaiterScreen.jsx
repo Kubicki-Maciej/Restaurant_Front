@@ -10,6 +10,7 @@ import styled from "styled-components";
 import ActiveOrderScreen from "./ActiveOrderScreen";
 import HistoryScreen from "./HistoryScreen";
 import MenuScreen from "./MenuScreen";
+import NewOrderScreen from "./NewOrderScreen";
 
 // Style
 const MainScreen = styled.div`
@@ -71,6 +72,10 @@ function WaiterScreens() {
             />
             <Route path="menu" element={<MenuScreen client={client} />} />
             <Route path="history" element={<HistoryScreen client={client} />} />
+            <Route
+              path="neworder"
+              element={<NewOrderScreen client={client} />}
+            />
           </Routes>
         </ConntentScren>
       </AppScreen>

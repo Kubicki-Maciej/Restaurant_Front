@@ -51,3 +51,15 @@ export const setOrderExsist = (order) => {
     },
   };
 };
+
+export const cleanWaiterOrder = () => {
+  return {
+    type: "CLEAN_ORDER",
+  };
+};
+
+export const cleanWaiterOrderSelected = () => {
+  return {
+    type: "ORDER_EXSIST_CLEAN",
+  };
+};

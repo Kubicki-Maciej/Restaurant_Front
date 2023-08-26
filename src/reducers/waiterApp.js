@@ -52,6 +52,8 @@ export const waiterOrder = (state = order, action) => {
         ...order,
         ordered_items: items,
       };
+    case "CLEAN_ORDER":
+      return order;
 
     default:
       return state;
@@ -88,6 +90,9 @@ export const waiterOrderSelected = (state = orderExist, action) => {
         exsist: true,
         order_id: order,
       };
+    }
+    case "ORDER_EXSIST_CLEAN": {
+      return orderExist;
     }
     default:
       return state;

@@ -45,7 +45,7 @@ export default function WaiterSideBar() {
         <Item to={"./menu"} title={"Menu Order"} />
         <Item to={"./history"} title={"History Orders"} />
         <Item to={"./neworder"} title={"Create New Orders"} />
-        ORDER LIST 'new','selected':
+
         <MiniOrderSideBar />
       </SideBar>
     </div>
