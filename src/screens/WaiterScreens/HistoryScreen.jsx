@@ -50,11 +50,11 @@ export default function HistoryScreen({ client }) {
   }
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
+    { field: "id", headerName: "ID", flex: 0.2 },
     {
       field: "name",
       headerName: "Name",
-      flex: 1,
+      flex: 0.8,
       cellClassName: "name-column--cell",
     },
     {
@@ -63,16 +63,19 @@ export default function HistoryScreen({ client }) {
       type: "data",
       headerAlign: "left",
       align: "left",
+      flex: 0.54,
     },
     {
       field: "order_number",
       headerName: "Order Number",
-      flex: 1,
+      align: "left",
+      flex: 0.8,
     },
     {
       field: "short_meals",
       headerName: "Meals",
-      flex: 1,
+      align: "left",
+      flex: 2,
     },
   ];
 
@@ -81,8 +84,10 @@ export default function HistoryScreen({ client }) {
   } else {
     return (
       <Box
-        m="40px 0 0 0"
+        width="100%"
+        m="20px 0 0 0"
         height="75vh"
+        borderRadius="20px"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -90,26 +95,32 @@ export default function HistoryScreen({ client }) {
           "& .MuiDataGrid-cell": {
             borderBottom: "none",
           },
+          "& .MuiDataGrid-row:nth-child(even)": {
+            borderBottom: "none",
+            backgroundColor: "lightgrey",
+          },
           "& .name-column--cell": {
-            color: "green",
+            color: "black",
           },
           "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: lightBlue,
+            backgroundColor: "lightgrey",
             borderBottom: "none",
           },
           "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: lightBlue,
+            backgroundColor: "",
           },
           "& .MuiDataGrid-footerContainer": {
             borderTop: "none",
-            backgroundColor: lightBlue,
+            backgroundColor: "white",
+            borderRadius: "0 0 20px 20px",
           },
           "& .MuiCheckbox-root": {
-            color: `${lightBlue} !important`,
+            color: `black !important`,
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${lightBlue} !important`,
+            color: `black !important`,
           },
+          backgroundColor: "white",
         }}
       >
         <DataGrid

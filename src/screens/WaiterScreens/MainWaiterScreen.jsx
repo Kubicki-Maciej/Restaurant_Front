@@ -25,6 +25,11 @@ const AppScreen = styled.div`
   height: 100vh;
 `;
 
+const ConntentScren = styled.div`
+  width: 100%;
+  margin: 0.5rem;
+`;
+
 const client = axios.create({
   baseURL: "http://127.0.0.1:8000/",
 });
@@ -58,7 +63,7 @@ function WaiterScreens() {
     <MainScreen>
       <AppScreen>
         <WaiterSideBar />
-        <main className="content">
+        <ConntentScren>
           <Routes>
             <Route
               path="orders"
@@ -67,7 +72,7 @@ function WaiterScreens() {
             <Route path="menu" element={<MenuScreen client={client} />} />
             <Route path="history" element={<HistoryScreen client={client} />} />
           </Routes>
-        </main>
+        </ConntentScren>
       </AppScreen>
     </MainScreen>
   );
