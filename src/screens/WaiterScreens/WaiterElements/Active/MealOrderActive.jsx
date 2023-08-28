@@ -20,9 +20,18 @@ const NameWithNumber = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+const ContainerForButton = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const ButtonPlus = styled.button``;
+const ButtonMinus = styled.button``;
+const ButtonCross = styled.button``;
+const OrderContainer = styled.div``;
 
-export default function MealOrderActive({ mealObj }) {
+export default function MealOrderActive({ mealObj, isOpen }) {
   const [meal, setMeal] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(isOpen);
   useEffect(() => {
     setMeal(mealObj);
   }, []);
@@ -30,7 +39,13 @@ export default function MealOrderActive({ mealObj }) {
   return (
     <MealWrap>
       <NameWithNumber>
-        {meal.meal_name} <NumberElement>X{meal.number_of_meals}</NumberElement>
+        {meal.meal_name}
+        <ContainerForButton>
+          {isModalOpen ? <ButtonMinus>-</ButtonMinus> : ""}
+          <NumberElement>X{meal.number_of_meals}</NumberElement>
+          {isModalOpen ? <ButtonPlus>+</ButtonPlus> : ""}
+          {isModalOpen ? <ButtonCross>x</ButtonCross> : ""}
+        </ContainerForButton>
       </NameWithNumber>
       <p>Comment: {meal.comments}</p>
     </MealWrap>

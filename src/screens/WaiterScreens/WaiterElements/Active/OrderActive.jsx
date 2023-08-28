@@ -34,6 +34,7 @@ export default function OrderActive({ item, client }) {
   const [waiter, setWaiter] = useState(0);
   const [meals, setMeals] = useState([]);
   const [order, setOrder] = useState({});
+  const [isLoadedDataFromRedux, setIsLoadedDataFromRedux] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -41,6 +42,7 @@ export default function OrderActive({ item, client }) {
     setWaiter(item.waiter_id);
     setOrder(item.order);
     setMeals(item.order.meals);
+    setIsLoadedDataFromRedux(true);
   }, [order, meals]);
 
   function getOrderData() {
@@ -50,9 +52,9 @@ export default function OrderActive({ item, client }) {
       if (meal.number_of_meals > 0) {
         tempList.push({
           id: meal.meal_id,
-          name: meal.meal_name,
+          meal_name: meal.meal_name,
           number_of_meals: meal.number_of_meals,
-          comment: meal.comments,
+          comments: meal.comments,
         });
       }
     });
@@ -61,29 +63,30 @@ export default function OrderActive({ item, client }) {
   }
 
   return (
-    <BoxOrder>
-      <OrderName>Order Number:{order.ean_code}</OrderName>
-      {/* meal section */}
-      <div>
-        {meals.map((meal) => {
-          return <MealOrderActive mealObj={meal} />;
-        })}
-      </div>
-      {/* Do logic here */}
-      <Popup
-        trigger={<button>ChangeOrder</button>}
-        modal
-        position="center center"
-      >
-        {/* {getOrderData()} */}
-        {(close) => (
+    <Popup
+      trigger={
+        <BoxOrder>
+          <OrderName>Order Number:{order.ean_code}</OrderName>
+
           <div>
-            <OrderPopOut client={client} />
-            <button onClick={() => close()}>CLOSE</button>
+            {meals.map((meal) => {
+              return <MealOrderActive mealObj={meal} />;
+            })}
           </div>
-        )}
-      </Popup>
-      <ChangeOrder onClick={() => getOrderData()}>Add Meal</ChangeOrder>
-    </BoxOrder>
+          {/* Do logic here */}
+        </BoxOrder>
+      }
+      modal
+      position="center center"
+    >
+      {(close) => (
+        <div>
+          {isLoadedDataFromRedux ? getOrderData() : ""}
+          <button onClick={() => close()}>CLOSE</button>
+          <OrderPopOut client={client} />
+          {/* <ChangeOrder onClick={() => getOrderData()}>Add Meal</ChangeOrder> */}
+        </div>
+      )}
+    </Popup>
   );
 }
