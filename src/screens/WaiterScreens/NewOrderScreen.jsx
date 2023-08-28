@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ClearWaiterOrder from "./WaiterElements/ClearWaiterOrder";
 import { useNavigate } from "react-router-dom";
+import MenuScreen from "./MenuScreen";
 
 export default function NewOrderScreen({ client }) {
-  const [isSelected, setIsSelected] = useState(false);
+  const [isSelectedItemsInMenu, setisSelectedItemsInMenu] = useState(false);
   const [isCleared, setIsCleared] = useState(false);
+  // const []
 
   const waiterOrderSelected = useSelector((state) => state.waiterOrderSelected);
   const waiterOrder = useSelector((state) => state.waiterOrder);
@@ -15,7 +17,9 @@ export default function NewOrderScreen({ client }) {
 
   useEffect(() => {
     isOrderActive();
-  }, [isSelected]);
+    if (isSelectedItemsInMenu) {
+    }
+  }, [isSelectedItemsInMenu]);
   //   useEffect;
 
   if (isCleared) {
@@ -25,15 +29,18 @@ export default function NewOrderScreen({ client }) {
     navigate("../menu");
   }
 
+  async function goToMenu() {
+    navigate("../menu");
+  }
   // if order is selected or last order isn't submited ask if u sure to createnew order
   function isOrderActive() {
     if (waiterOrderSelected.exsist) {
-      setIsSelected(true);
-      console.log(isSelected);
+      setisSelectedItemsInMenu(true);
+      console.log(isSelectedItemsInMenu);
     }
   }
 
-  if (isSelected) {
+  if (isSelectedItemsInMenu) {
     return (
       // maybe do it in popout ? or just center this ?
       <div>
@@ -45,6 +52,6 @@ export default function NewOrderScreen({ client }) {
       </div>
     );
   } else {
-    return <div> return to menu</div>;
+    return <MenuScreen client={client} />;
   }
 }

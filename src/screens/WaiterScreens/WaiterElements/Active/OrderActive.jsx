@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { useState, useEffect } from "react";
 import MealOrderActive from "./MealOrderActive";
 import { useDispatch } from "react-redux";
+import Popup from "reactjs-popup";
 
 // Actions
 import {
@@ -10,6 +11,7 @@ import {
   loadProductFromActiveOrder,
   setOrderExsist,
 } from "../../../../actions/waiterAppAction";
+import OrderPopOut from "../OrderPopOut";
 
 const BoxOrder = styled.div`
   display: flex;
@@ -28,7 +30,7 @@ const ChangeOrder = styled.button`
   font-weight: bold;
 `;
 
-export default function OrderActive({ item }) {
+export default function OrderActive({ item, client }) {
   const [waiter, setWaiter] = useState(0);
   const [meals, setMeals] = useState([]);
   const [order, setOrder] = useState({});
@@ -41,7 +43,7 @@ export default function OrderActive({ item }) {
     setMeals(item.order.meals);
   }, [order, meals]);
 
-  function sendToRedux() {
+  function getOrderData() {
     const meals = order.meals;
     const tempList = [];
     meals.forEach((meal) => {
@@ -68,7 +70,20 @@ export default function OrderActive({ item }) {
         })}
       </div>
       {/* Do logic here */}
-      <ChangeOrder onClick={() => sendToRedux()}>Change order</ChangeOrder>
+      <Popup
+        trigger={<button>ChangeOrder</button>}
+        modal
+        position="center center"
+      >
+        {/* {getOrderData()} */}
+        {(close) => (
+          <div>
+            <OrderPopOut client={client} />
+            <button onClick={() => close()}>CLOSE</button>
+          </div>
+        )}
+      </Popup>
+      <ChangeOrder onClick={() => getOrderData()}>Add Meal</ChangeOrder>
     </BoxOrder>
   );
 }

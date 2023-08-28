@@ -47,7 +47,7 @@ export default function ActiveOrderScreen({ client }) {
       <MainPage>
         <OrderPage>
           {orders.map((order, index) => {
-            return <OrderActive item={order} />;
+            return <OrderActive client={client} item={order} />;
           })}
         </OrderPage>
       </MainPage>
