@@ -12,15 +12,36 @@ const MiniOrder = styled.div``;
 const MiniItem = styled.div``;
 const ButtonSendOrder = styled.button``;
 
-export default function MiniOrderSideBar() {
+export default function MiniOrderSideBar({ client }) {
   const orderData = useSelector((state) => state.waiterOrder);
   const specificOrderData = useSelector((state) => state.waiterOrderSelected);
+  const userData = useSelector((state) => state.userData);
   const [orderActive, setOrderActive] = useState(false);
-
+  const [data, setData] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   function sendToApiDataOrder() {
-    console.log(orderData);
-    console.log("DATA IS SENDED TO BACKEND");
+    // need to check if order exist
+    const postData = {
+      order: orderData,
+      waiter: userData,
+    };
+    console.log(postData);
+    client
+      .post(`/waiter/create_waiter_order`, postData)
+      .then((actualData) => {
+        setData(actualData.data);
+        console.log(actualData.data);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setData(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
+
   //   maybe after clicking it pop out big window with order then get option to send ?
   // create statment that check if its new order or selected order
   return (

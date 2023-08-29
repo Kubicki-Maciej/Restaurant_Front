@@ -37,7 +37,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-export default function WaiterSideBar() {
+export default function WaiterSideBar({ client }) {
   return (
     <div>
       <SideBar>
@@ -46,7 +46,7 @@ export default function WaiterSideBar() {
         <Item to={"./history"} title={"History Orders"} />
         <Item to={"./neworder"} title={"Create New Orders"} />
 
-        <MiniOrderSideBar />
+        <MiniOrderSideBar client={client} />
       </SideBar>
     </div>
   );

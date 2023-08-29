@@ -63,7 +63,7 @@ function WaiterScreens() {
   return (
     <MainScreen>
       <AppScreen>
-        <WaiterSideBar />
+        <WaiterSideBar client={client} />
         <ConntentScren>
           <Routes>
             <Route

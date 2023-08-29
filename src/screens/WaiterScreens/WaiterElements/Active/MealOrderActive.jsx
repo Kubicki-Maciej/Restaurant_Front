@@ -104,7 +104,12 @@ export default function MealOrderActive({ mealObj, isOpen }) {
 
         <NumberButtonsContainer>
           {isModalOpen ? (
-            <ButtonMinus onClick={decrementCount}>-</ButtonMinus>
+            <ButtonMinus
+              disabled={meal.number_of_meals === 0}
+              onClick={decrementCount}
+            >
+              -
+            </ButtonMinus>
           ) : (
             ""
           )}
