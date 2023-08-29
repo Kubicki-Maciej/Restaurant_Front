@@ -66,7 +66,7 @@ export default function OrderActive({ item, client }) {
     <Popup
       trigger={
         <BoxOrder>
-          <OrderName>Order Number:{order.ean_code}</OrderName>
+          <OrderName>Order Number:{order.order_number}</OrderName>
 
           <div>
             {meals.map((meal) => {

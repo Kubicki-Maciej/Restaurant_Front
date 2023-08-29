@@ -51,6 +51,7 @@ export default function ActiveOrderScreen({ client }) {
           })}
         </OrderPage>
       </MainPage>
+      {/* order_number */}
     </div>
   );
 }

@@ -20,6 +20,11 @@ export default function MiniOrderSideBar({ client }) {
   const [data, setData] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  function showModalPopUp() {
+    return <div>To moj komponent</div>;
+  }
+
   function sendToApiDataOrder() {
     // need to check if order exist
     const postData = {
@@ -60,9 +65,7 @@ export default function MiniOrderSideBar({ client }) {
               {item.meal_name} :{item.number_of_meals}
             </MiniItem>
           ))}
-          <ButtonSendOrder onClick={sendToApiDataOrder}>
-            Send Order
-          </ButtonSendOrder>
+          <ButtonSendOrder onClick={showModalPopUp}>Send Order</ButtonSendOrder>
         </MiniOrder>
       ) : (
         ""
