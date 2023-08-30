@@ -1,6 +1,13 @@
 import React from "react";
 import { styled } from "styled-components";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  removeProductFromOrder,
+  incrementProductFromOrder,
+  decrementProductFromOrder,
+  updateProductFromOrder,
+} from "../../../../actions/waiterAppAction";
 
 const MealWrap = styled.div`
   padding-top: 2px;
@@ -8,7 +15,6 @@ const MealWrap = styled.div`
   flex-direction: column;
   border-top: 2px dotted grey;
 `;
-
 const NumberElement = styled.div`
   font-weight: bold;
   background-color: grey;
@@ -56,41 +62,52 @@ const ButtonCross = styled.button`
     background-color: red;
   }
 `;
-
 const OrderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 `;
-
 const NameCommentContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export default function MealOrderActive({ mealObj, isOpen }) {
+export default function MealOrderActive({ mealObj, isOpen, orderId }) {
   const [meal, setMeal] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
-  // const meal.number_of_meals
+  const [order, setOrder] = useState({});
+
+  const dispatch = useDispatch();
   console.log(meal);
   const count = meal.number_of_meals;
 
   function decrementCount() {
+    console.log(order);
     setMeal((prevState) => {
       return { ...prevState, number_of_meals: prevState.number_of_meals - 1 };
     });
   }
   function incrementCount() {
+    console.log(meal);
     setMeal((prevState) => {
       return { ...prevState, number_of_meals: prevState.number_of_meals + 1 };
     });
+    console.log(meal);
   }
-  function deleteFoodOrder() {}
+  function deleteFoodOrder() {
+    setMeal((prevState) => {
+      return { ...prevState, number_of_meals: 0 };
+    });
+  }
 
   useEffect(() => {
     setMeal(mealObj);
   }, [mealObj]);
-  // add min value of 0
+
+  useEffect(() => {
+    dispatch(updateProductFromOrder(meal));
+  }, [meal]);
+
   // create to update it on REDUX
   // create API SEND
 
@@ -98,7 +115,7 @@ export default function MealOrderActive({ mealObj, isOpen }) {
     <MealWrap>
       <OrderContainer>
         <NameCommentContainer>
-          {meal.meal_name}
+          {meal.meal_name} {meal.name}
           <p>Comment: {meal.comments}</p>
         </NameCommentContainer>
 
@@ -121,7 +138,11 @@ export default function MealOrderActive({ mealObj, isOpen }) {
           ) : (
             ""
           )}
-          {isModalOpen ? <ButtonCross>x</ButtonCross> : ""}
+          {isModalOpen ? (
+            <ButtonCross onClick={deleteFoodOrder}>x</ButtonCross>
+          ) : (
+            ""
+          )}
         </NumberButtonsContainer>
       </OrderContainer>
     </MealWrap>

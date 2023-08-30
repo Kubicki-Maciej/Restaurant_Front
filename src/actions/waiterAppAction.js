@@ -3,6 +3,7 @@ export const incrementFood = () => {
     type: "INCREMENT_ITEM",
   };
 };
+
 export const decrementFood = () => {
   return {
     type: "DECREMENT_ITEM",
@@ -61,5 +62,32 @@ export const cleanWaiterOrder = () => {
 export const cleanWaiterOrderSelected = () => {
   return {
     type: "ORDER_EXSIST_CLEAN",
+  };
+};
+
+export const removeProductFromOrder = (id) => {
+  return {
+    type: "REMOVE_PRODUCT",
+    payload: id,
+  };
+};
+
+export const incrementProductFromOrder = (id) => {
+  return {
+    type: "INCREMENT_PRODUCT_COUNT",
+    payload: id,
+  };
+};
+
+export const decrementProductFromOrder = (id) => {
+  return {
+    type: "DECREMENT_PRODUCT_COUNT",
+    payload: id,
+  };
+};
+export const updateProductFromOrder = (product) => {
+  return {
+    type: "UPDATE_STATE_PRODUCT_ORDERS",
+    payload: product,
   };
 };

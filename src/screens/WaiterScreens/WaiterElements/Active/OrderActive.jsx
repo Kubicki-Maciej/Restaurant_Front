@@ -70,7 +70,17 @@ export default function OrderActive({ item, client }) {
 
           <div>
             {meals.map((meal) => {
-              return <MealOrderActive mealObj={meal} />;
+              if (isLoadedDataFromRedux) {
+                console.log("tutaj");
+                console.log(order.order_number);
+                console.log(order);
+                return (
+                  <MealOrderActive
+                    mealObj={meal}
+                    orderId={order.order_number}
+                  />
+                );
+              }
             })}
           </div>
           {/* Do logic here */}

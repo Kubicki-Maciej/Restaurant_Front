@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { useState } from "react";
+import Popup from "reactjs-popup";
+import OrderPopOut from "./OrderPopOut";
 
 const MiniOrderContainer = styled.div`
   background-color: lightgray;
@@ -22,6 +24,7 @@ export default function MiniOrderSideBar({ client }) {
   const [loading, setLoading] = useState(false);
 
   function showModalPopUp() {
+    console.log("run");
     return <div>To moj komponent</div>;
   }
 
@@ -31,6 +34,7 @@ export default function MiniOrderSideBar({ client }) {
       order: orderData,
       waiter: userData,
     };
+
     console.log(postData);
     client
       .post(`/waiter/create_waiter_order`, postData)
@@ -53,12 +57,10 @@ export default function MiniOrderSideBar({ client }) {
     <MiniOrderContainer>
       {specificOrderData.exsist ? (
         <h1>Order : {specificOrderData.order_id.order_id}</h1>
-      ) : specificOrderData.order_id.order_id ? (
-        <h1>New Order</h1>
       ) : (
-        ""
+        <p>New Order</p>
       )}
-      {orderData.ordered_items.length > 0 ? (
+      {specificOrderData.exsist ? (
         <MiniOrder>
           {orderData.ordered_items.map((item) => (
             <MiniItem>
@@ -68,7 +70,24 @@ export default function MiniOrderSideBar({ client }) {
           <ButtonSendOrder onClick={showModalPopUp}>Send Order</ButtonSendOrder>
         </MiniOrder>
       ) : (
-        ""
+        <MiniOrder>
+          {orderData.ordered_items.map((item) => (
+            <MiniItem>
+              {item.name} :{item.number_of_meals}
+            </MiniItem>
+          ))}
+          <Popup
+            modal
+            position="center center"
+            trigger={
+              <ButtonSendOrder onClick={showModalPopUp}>
+                Send Order
+              </ButtonSendOrder>
+            }
+          >
+            <OrderPopOut />
+          </Popup>
+        </MiniOrder>
       )}
     </MiniOrderContainer>
   );

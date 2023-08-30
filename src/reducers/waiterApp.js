@@ -39,21 +39,59 @@ export const waiterOrder = (state = order, action) => {
       }
 
     case "REMOVE_PRODUCT":
-      return state + 2;
-    case "CHANGE_PRODUCT_NUMBER":
-      //         orders: state.orders.map((order) =>
-      //   order.id === action.payload.id? action.payload : order
-      return state + 3;
+      return {
+        ...state,
+        ordered_items: state.ordered_items.filter(
+          (x) => x.id !== action.payload
+        ),
+      };
+
+    case "INCREMENT_PRODUCT_COUNT":
+      const incrementId = action.payload;
+      const foodElement = state.ordered_items.find(
+        (i) => i.id === incrementId.id
+      );
+      if (foodElement) {
+        // console.log("increment");
+        let newValue = foodElement.number_of_meals + 1;
+        return {
+          ...state,
+          ordered_items: state.ordered_items.map((i) =>
+            i.id === foodElement.id ? (i.number_of_meals = newValue) : i
+          ),
+        };
+      }
+
+    case "DECREMENT_PRODUCT_COUNT":
+      const decrementId = action.payload;
+
+      return {
+        ...state,
+        ordered_items: state.ordered_items.map((item) =>
+          item.id === decrementId
+            ? { ...item, number_of_meals: item.number_of_meals - 1 }
+            : item
+        ),
+      };
 
     case "LOAD_ORDER_FROM_ACTIVE_ORDERS":
       const items = action.payload;
-
       return {
         ...order,
         ordered_items: items,
       };
+
     case "CLEAN_ORDER":
       return order;
+
+    case "UPDATE_STATE_PRODUCT_ORDERS":
+      const porductItem = action.payload;
+      return {
+        ...state,
+        ordered_items: state.ordered_items.map((i) =>
+          i.id === porductItem.id ? porductItem : i
+        ),
+      };
 
     default:
       return state;

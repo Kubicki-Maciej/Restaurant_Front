@@ -16,8 +16,8 @@ export default function OrderPopOut({ client }) {
           </div>
         );
       })}
-      <button>Send order button</button>
-      <button>End order button</button>
+      <button>Update order</button>
+      <button>End order</button>
     </div>
   );
 }
