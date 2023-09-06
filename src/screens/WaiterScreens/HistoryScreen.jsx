@@ -35,8 +35,7 @@ export default function HistoryScreen({ client }) {
 
   async function fetchDataHisoryOrders() {
     client
-      // .post(`/waiter/get_all_waiter_history_orders`, { waiter_id: waiter_id })
-      .post(`/waiter/get_all_waiter_orders_active`, { waiter_id: waiter_id })
+      .post(`/waiter/get_all_waiter_history_orders`, { waiter_id: waiter_id })
       .then((actualData) => {
         setData(actualData.data);
       })

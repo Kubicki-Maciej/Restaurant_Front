@@ -78,21 +78,18 @@ export default function MealOrderActive({ mealObj, isOpen, orderId }) {
   const [order, setOrder] = useState({});
 
   const dispatch = useDispatch();
-  console.log(meal);
+
   const count = meal.number_of_meals;
 
   function decrementCount() {
-    console.log(order);
     setMeal((prevState) => {
       return { ...prevState, number_of_meals: prevState.number_of_meals - 1 };
     });
   }
   function incrementCount() {
-    console.log(meal);
     setMeal((prevState) => {
       return { ...prevState, number_of_meals: prevState.number_of_meals + 1 };
     });
-    console.log(meal);
   }
   function deleteFoodOrder() {
     setMeal((prevState) => {

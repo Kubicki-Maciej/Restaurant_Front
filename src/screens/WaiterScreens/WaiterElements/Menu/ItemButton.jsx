@@ -25,7 +25,7 @@ export default function ItemButton({ itemObject }) {
     dispatch(
       addProduct({
         id: itemObj.meal_id,
-        name: itemObj.meal_name,
+        meal_name: itemObj.meal_name,
         number_of_meals: 1,
       })
     );

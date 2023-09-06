@@ -64,7 +64,7 @@ export default function MiniOrderSideBar({ client }) {
         <MiniOrder>
           {orderData.ordered_items.map((item) => (
             <MiniItem>
-              {item.meal_name} :{item.number_of_meals}
+              {item.meal_name} : {item.number_of_meals}
             </MiniItem>
           ))}
           <ButtonSendOrder onClick={showModalPopUp}>Send Order</ButtonSendOrder>
@@ -73,7 +73,7 @@ export default function MiniOrderSideBar({ client }) {
         <MiniOrder>
           {orderData.ordered_items.map((item) => (
             <MiniItem>
-              {item.name} :{item.number_of_meals}
+              {item.meal_name} : {item.number_of_meals}
             </MiniItem>
           ))}
           <Popup
