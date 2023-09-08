@@ -113,7 +113,9 @@ export default function MealOrderActive({ mealObj, isOpen, orderId }) {
       <OrderContainer>
         <NameCommentContainer>
           {meal.meal_name} {meal.name}
-          <p>Comment: {meal.comments}</p>
+          <p>
+            Comment: {meal.comments} {meal.comment}
+          </p>
         </NameCommentContainer>
 
         <NumberButtonsContainer>

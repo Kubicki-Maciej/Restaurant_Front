@@ -20,6 +20,7 @@ const OrderPage = styled.div`
 export default function ActiveOrderScreen({ client }) {
   const [dataOrders, setDataOrders] = useState([]);
   const [orders, setOrders] = useState([]);
+
   const dispatch = useDispatch();
   const waiter_id = useSelector((state) => state.userData.id);
 
@@ -33,13 +34,16 @@ export default function ActiveOrderScreen({ client }) {
         console.log(error);
       });
   }
+
   useEffect(() => {
     fetchDataOrders();
   }, []);
 
   useEffect(() => {
     setOrders(dataOrders);
-  }, [dataOrders]);
+    console.log("orders");
+    console.log(dataOrders);
+  }, [dataOrders, orders]);
 
   return (
     <div className="waiterApp">

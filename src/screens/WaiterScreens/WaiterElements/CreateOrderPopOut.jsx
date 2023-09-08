@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import MealOrderActive from "./Active/MealOrderActive";
 import { useState } from "react";
 
-export default function OrderPopOut({ client }) {
+export default function CreateOrderPopOut({ client }) {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -13,35 +13,23 @@ export default function OrderPopOut({ client }) {
 
   function updateOrder() {
     const orderId = selectedOrderData.order_id.order_id;
-    const updateData = {
-      orderId: orderId,
-      orderedMeals: orderData.ordered_items,
+
+    const order = {
+      waiter: orderId,
+      order: orderData,
     };
+    console.log(order);
+
+    console.log("create order");
+    console.log(orderData.ordered_items);
     client
-      .post(`/order/update_order`, updateData)
+      .post(`/waiter/create_waiter_order`, order)
       .then((actualData) => {
         console.log(actualData);
       })
       .catch((err) => {
         setError(true);
         setErrorMessage(err);
-      })
-      .finally(() => {});
-  }
-
-  function endOrder() {
-    const orderId = selectedOrderData.order_id.order_id;
-    const dataOrderEnd = {
-      orderId: orderId,
-      waiterId: waiterData.id,
-    };
-    client
-      .put(`/order/end_order`, dataOrderEnd)
-      .then((actualData) => {
-        console.log(actualData);
-      })
-      .catch((err) => {
-        setError(err);
       })
       .finally(() => {});
   }
@@ -58,8 +46,7 @@ export default function OrderPopOut({ client }) {
         );
       })}
       <div>
-        <button onClick={updateOrder}>Update order</button>
-        <button onClick={endOrder}>End order</button>
+        <button onClick={updateOrder}>Create order</button>
       </div>
     </div>
   );

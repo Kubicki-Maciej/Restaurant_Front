@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import { useState } from "react";
 import Popup from "reactjs-popup";
 import OrderPopOut from "./OrderPopOut";
+import CreateOrderPopOut from "./CreateOrderPopOut";
 
 const MiniOrderContainer = styled.div`
   background-color: lightgray;
@@ -25,10 +26,9 @@ export default function MiniOrderSideBar({ client }) {
 
   function showModalPopUp() {
     console.log("run");
-    return <div>To moj komponent</div>;
   }
 
-  function sendToApiDataOrder() {
+  function createNewOrder() {
     // need to check if order exist
     const postData = {
       order: orderData,
@@ -67,7 +67,18 @@ export default function MiniOrderSideBar({ client }) {
               {item.meal_name} : {item.number_of_meals}
             </MiniItem>
           ))}
-          <ButtonSendOrder onClick={showModalPopUp}>Send Order</ButtonSendOrder>
+          {/* ADD HERE NEW  */}
+          <Popup
+            modal
+            position="center center"
+            trigger={
+              <ButtonSendOrder onClick={showModalPopUp}>
+                Change Order
+              </ButtonSendOrder>
+            }
+          >
+            <OrderPopOut client={client} />
+          </Popup>
         </MiniOrder>
       ) : (
         <MiniOrder>
@@ -81,11 +92,11 @@ export default function MiniOrderSideBar({ client }) {
             position="center center"
             trigger={
               <ButtonSendOrder onClick={showModalPopUp}>
-                Send Order
+                Create Order
               </ButtonSendOrder>
             }
           >
-            <OrderPopOut />
+            <CreateOrderPopOut client={client} />
           </Popup>
         </MiniOrder>
       )}
