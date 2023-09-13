@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { styled } from "styled-components";
 import { useState } from "react";
 import Popup from "reactjs-popup";
-import OrderPopOut from "./OrderPopOut";
-import CreateOrderPopOut from "./CreateOrderPopOut";
+import OrderPopOut from "./Order/OrderPopOut";
+import CreateOrderPopOut from "./Order/CreateOrderPopOut";
 
 const MiniOrderContainer = styled.div`
   background-color: lightgray;

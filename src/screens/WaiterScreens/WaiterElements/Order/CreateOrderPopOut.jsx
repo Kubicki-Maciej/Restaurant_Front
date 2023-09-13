@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import MealOrderActive from "./Active/MealOrderActive";
+import MealOrderActive from "../Active/MealOrderActive";
 import { useState } from "react";
 
 export default function CreateOrderPopOut({ client }) {
@@ -12,10 +12,10 @@ export default function CreateOrderPopOut({ client }) {
   const waiterData = useSelector((state) => state.userData);
 
   function updateOrder() {
-    const orderId = selectedOrderData.order_id.order_id;
+    const waiterId = waiterData.id;
 
     const order = {
-      waiter: orderId,
+      waiter: waiterId,
       order: orderData,
     };
     console.log(order);

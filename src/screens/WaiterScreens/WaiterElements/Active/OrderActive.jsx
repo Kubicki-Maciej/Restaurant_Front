@@ -11,7 +11,7 @@ import {
   loadProductFromActiveOrder,
   setOrderExsist,
 } from "../../../../actions/waiterAppAction";
-import OrderPopOut from "../OrderPopOut";
+import OrderPopOut from "../Order/OrderPopOut";
 
 const BoxOrder = styled.div`
   display: flex;

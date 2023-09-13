@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import MealOrderActive from "./Active/MealOrderActive";
+import MealOrderActive from "../Active/MealOrderActive";
 import { useState } from "react";
 
 export default function OrderPopOut({ client }) {
