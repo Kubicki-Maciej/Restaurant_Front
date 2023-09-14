@@ -1,13 +1,23 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
+
+//
+import ManagerNavbar from "./ManagerNavBar/ManagerNavBar";
+
+// cards
+import DashboardCard from "./ManagerCards/DashboardCard";
 
 // Style
 const MainScreen = styled.div``;
 const AppScreen = styled.div``;
 
-const ConntentScren = styled.div``;
+const ConntentScreen = styled.div`
+  width: 100%;
+  margin: 0.5rem;
+`;
 
 const client = axios.create({
   baseURL: "http://127.0.0.1:8000/",
@@ -24,7 +34,13 @@ function MainManagerScreen() {
 
   return (
     <div>
-      {/* Nav bar */}
+      <ManagerNavbar />
+      {/* Mini bars */}
+      <ConntentScreen>
+        <Routes>
+          <Route path="dashboard" element={<DashboardCard />}></Route>
+        </Routes>
+      </ConntentScreen>
       {/* create user section */}
       {/* Create new kitchen, waiter user if permisions */}
       {/* Check section */}
@@ -37,7 +53,7 @@ function MainManagerScreen() {
       {/* Add Dish */}
       {/* Add Product */}
       {/* Add product to storage/ update quantity*/}
-      Manager Screen
+
       {/* Boxes with information sales, graphs, tranding product etc*/}
     </div>
   );
