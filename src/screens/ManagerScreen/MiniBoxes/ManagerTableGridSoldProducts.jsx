@@ -1,11 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import TestDataOrders from "../TestData/TestData";
-// style
-import { BoxContainer, BoxItem } from "./style/BoxStyle";
-// data chart test
-import BarChart from "./Charts/BarChart";
-import BarSoldMealsForDate from "./Charts/BarSoldMealsForDate";
 
 export default function ManagerTableGrid() {
   const [data, setData] = useState([]);
@@ -14,7 +9,8 @@ export default function ManagerTableGrid() {
   const [dataDish, setDataDish] = useState({});
   const [dataDishDate, setDataDishDate] = useState({});
   const [dishLoaded, setDishLoaded] = useState(false);
-  const [dataNames, setDataNames] = useState([]);
+  const [mealNames, setMealNames] = useState([]);
+
   useEffect(() => {
     setData(TestDataOrders);
     setDataFirst(data[0]);
@@ -22,12 +18,17 @@ export default function ManagerTableGrid() {
     if (loading) {
       setDataDish(SumDish(data));
       setDataDishDate(SumDishByDate(data));
-      console.log(dataDish);
-      console.log(dataDishDate);
       setDishLoaded(true);
-      setDataNames();
     }
   }, [data, dataFirst]);
+
+  function getMealNames(dataInput) {
+    const tempMealsNames = [];
+    Object.entries(dataInput).map(([item, value]) => {
+      tempMealsNames.push(item);
+    });
+    return tempMealsNames;
+  }
 
   function SumDish(dataOrders) {
     // for (const order in data) {
@@ -49,47 +50,34 @@ export default function ManagerTableGrid() {
 
     dataOrders.forEach((item) => {
       const date = item["date_end"].substring(0, 10);
-      if (mealCountsByDate[date]) {
-        item.meals_ordered.forEach((meal_order) => {
-          const { id, meal_name } = meal_order.meal;
-          const count = mealCountsByDate[date][meal_name] || 0;
-          mealCountsByDate[date][meal_name] = count + meal_order.number_of_meal;
-        });
-      } else {
-        mealCountsByDate[date] = {};
-        item.meals_ordered.forEach((meal_order) => {
-          const { id, meal_name } = meal_order.meal;
-          const count = mealCountsByDate[date][meal_name] || 0;
-          mealCountsByDate[date][meal_name] = count + meal_order.number_of_meal;
-        });
-      }
+      mealCountsByDate[date] = {};
+
+      item.meals_ordered.forEach((meal_order) => {
+        const { id, meal_name } = meal_order.meal;
+        const count = mealCountsByDate[date][meal_name] || 0;
+        mealCountsByDate[date][meal_name] = count + meal_order.number_of_meal;
+      });
     });
     return mealCountsByDate;
   }
 
+  console.log("dataDish");
+  console.log(dataDish);
+  console.log(dataDishDate);
+
   return (
     <div>
+      Sold items in September
       {loading ? (
         <div>
           {dishLoaded ? (
-            <BoxContainer>
-              {/* <BoxItem>
-                Sold items in September:
-                {Object.entries(dataDish).map(([item, value]) => (
-                  <div>
-                    {item} : {value}
-                  </div>
-                ))}
-              </BoxItem>
-              <BoxItem>
-                Chart
-                <BarChart />
-              </BoxItem> */}
-
-              <BoxItem>
-                <BarSoldMealsForDate data={dataDishDate} keys={dataNames} />
-              </BoxItem>
-            </BoxContainer>
+            <div>
+              {Object.entries(dataDish).map(([item, value]) => (
+                <div>
+                  {item} : {value}
+                </div>
+              ))}
+            </div>
           ) : (
             <div>Computing Data</div>
           )}
@@ -100,3 +88,20 @@ export default function ManagerTableGrid() {
     </div>
   );
 }
+
+// {data.map((item) => (
+//   <tr key={item.id}>
+//     <td>{item.id}</td>
+//     <td>{item.waiter_id}</td>
+//     <td>___</td>
+//     <td>
+//       {item.meals_ordered.map((meal) => (
+//         <div key={meal.meal.id}>
+//           {meal.number_of_meal} x {meal.meal.meal_name} (
+//           {meal.meal.cost} each) total cost{" "}
+//           {meal.number_of_meal * meal.meal.cost}
+//         </div>
+//       ))}
+//     </td>
+//   </tr>
+// ))}
