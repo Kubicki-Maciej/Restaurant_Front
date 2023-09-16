@@ -1,20 +1,13 @@
 import React from "react";
-import styled from "styled-components";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { useSelector } from "react-redux";
+//
+import NavBarElement from "./NavBarElement";
 
 const NavBar = styled.div`
-  /* position: fixed;
-  
-  top: 0;
-  left: 0;
-  width: 15rem;
-  margin-right: 1rem;
-  height: 100%;
-  background-color: #f8f9fa;
-  padding: 0.5rem; */
-
   background-color: #333;
   color: #fff;
   display: flex;
@@ -38,7 +31,6 @@ const NavBarLink = styled.div`
   text-decoration: none;
   padding: 10px;
 `;
-
 const HeaderNavBar = styled.h1`
   border: solid black 1px;
   text-align: center;
@@ -48,55 +40,25 @@ const NavBarWraper = styled.div`
   flex-direction: row;
   color: white;
 `;
-const MiniOrder = styled.div``;
-const MiniItem = styled.div``;
-const ButtonSendOrder = styled.button``;
-
-const MenuItem = styled.div`
-  text-decoration: none;
-  font-weight: bold;
-  text-align: center;
-  color: #fff;
-  text-decoration: none;
-  padding: 10px;
-`;
-
-const Item = ({ title, to, icon, selected, setSelected }) => {
-  return (
-    <Link to={to}>
-      <MenuItem>
-        <p>{title}</p>
-      </MenuItem>
-    </Link>
-  );
-};
 
 export default function ManagerNavbar() {
+  const [selectedElement, setSelectedElement] = useState(0);
+  // const [listOfElements, setlistOfElements] = useState([]);
+  const listOfElements = ["Dashboard", "Waiters", "Kitchen", "Menu", "Storage"];
+
   return (
     <NavBar>
-      <HeaderNavBar>NAV BAR</HeaderNavBar>
-
+      <HeaderNavBar>{listOfElements[selectedElement]}</HeaderNavBar>
       <NavBarWraper>
-        <Item to={"./dashboard"} title={"Dashboard"} />
-        <Item to={"./orders"} title={"Waiters"} />
-        <Item to={"./orders"} title={"Kitchen"} />
-        <Item to={"./orders"} title={"Menu"} />
-        <Item to={"./orders"} title={"Storage"} />
-        {/* <NavBarItem>
-          <NavBarLink>Dashboard</NavBarLink>
-        </NavBarItem>
-        <NavBarItem>
-          <NavBarLink>Waiters</NavBarLink>
-        </NavBarItem>
-        <NavBarItem>
-          <NavBarLink>Kitchen</NavBarLink>
-        </NavBarItem>
-        <NavBarItem>
-          <NavBarLink>Menu</NavBarLink>
-        </NavBarItem>
-        <NavBarItem>
-          <NavBarLink>Storage</NavBarLink>
-        </NavBarItem> */}
+        {listOfElements.map((element, index) => (
+          <NavBarItem>
+            <NavBarElement
+              to={`./${element}`}
+              selected={() => setSelectedElement(index)}
+              title={element}
+            />
+          </NavBarItem>
+        ))}
       </NavBarWraper>
     </NavBar>
   );
