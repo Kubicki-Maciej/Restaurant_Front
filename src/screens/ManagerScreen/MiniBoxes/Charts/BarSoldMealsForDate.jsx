@@ -63,6 +63,7 @@ export default function BarSoldMealsForDate({ data, key }) {
     };
 
     objectList.sort(compareByDate);
+    // create component that return selected data
     return objectList.slice(0, 5);
   }
 
@@ -121,7 +122,7 @@ export default function BarSoldMealsForDate({ data, key }) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "country",
+          legend: "date",
           legendPosition: "middle",
           legendOffset: 32,
         }}

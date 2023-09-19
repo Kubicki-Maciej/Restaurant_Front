@@ -43,7 +43,6 @@ const NavBarWraper = styled.div`
 
 export default function ManagerNavbar() {
   const [selectedElement, setSelectedElement] = useState(0);
-  // const [listOfElements, setlistOfElements] = useState([]);
   const listOfElements = ["Dashboard", "Waiters", "Kitchen", "Menu", "Storage"];
 
   return (

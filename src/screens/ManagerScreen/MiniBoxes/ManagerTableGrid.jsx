@@ -1,11 +1,17 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import TestDataOrders from "../TestData/TestData";
+
 // style
 import { BoxContainer, BoxItem } from "./style/BoxStyle";
 // data chart test
+import TestDataOrders from "../TestData/TestData";
+import TestDataWaiters from "../TestData/TestDataWaiters";
+// box bar components
+import ManagerDateRange from "./ManagerDateRange";
+// bar components
 import BarChart from "./Charts/BarChart";
 import BarSoldMealsForDate from "./Charts/BarSoldMealsForDate";
+import BarWaitersEarnings from "./Charts/WaitersEarnings";
 
 export default function ManagerTableGrid() {
   const [data, setData] = useState([]);
@@ -15,15 +21,20 @@ export default function ManagerTableGrid() {
   const [dataDishDate, setDataDishDate] = useState({});
   const [dishLoaded, setDishLoaded] = useState(false);
   const [dataNames, setDataNames] = useState([]);
+
+  const [dataWaiter, setDataWaiter] = useState([]);
+
   useEffect(() => {
+    setDataWaiter(TestDataWaiters);
+
     setData(TestDataOrders);
     setDataFirst(data[0]);
     setLoading(true);
     if (loading) {
       setDataDish(SumDish(data));
       setDataDishDate(SumDishByDate(data));
-      console.log(dataDish);
-      console.log(dataDishDate);
+      // console.log(dataDish);
+      // console.log(dataDishDate);
       setDishLoaded(true);
       setDataNames();
     }
@@ -66,6 +77,13 @@ export default function ManagerTableGrid() {
     });
     return mealCountsByDate;
   }
+  const testTableWaiters = [
+    { waiter_id: 1, waiter_name: "Maciej" },
+    { waiter_id: 2, waiter_name: "Zysio" },
+    { waiter_id: 3, waiter_name: "Guzio" },
+    { waiter_id: 4, waiter_name: "Buzio" },
+    { waiter_id: 5, waiter_name: "Kazio" },
+  ];
 
   return (
     <div>
@@ -87,7 +105,12 @@ export default function ManagerTableGrid() {
               </BoxItem> */}
 
               <BoxItem>
+                <ManagerDateRange></ManagerDateRange>
                 <BarSoldMealsForDate data={dataDishDate} keys={dataNames} />
+              </BoxItem>
+              <BoxItem>
+                <ManagerDateRange></ManagerDateRange>
+                <BarWaitersEarnings data={dataWaiter} keys={testTableWaiters} />
               </BoxItem>
             </BoxContainer>
           ) : (

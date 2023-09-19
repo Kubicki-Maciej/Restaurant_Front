@@ -61,9 +61,9 @@ export default function ManagerTableGrid() {
     return mealCountsByDate;
   }
 
-  console.log("dataDish");
-  console.log(dataDish);
-  console.log(dataDishDate);
+  // console.log("dataDish");
+  // console.log(dataDish);
+  // console.log(dataDishDate);
 
   return (
     <div>
