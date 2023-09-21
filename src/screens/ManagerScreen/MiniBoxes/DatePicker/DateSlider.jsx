@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const Slider = styled.input`
@@ -41,42 +41,66 @@ const Slider = styled.input`
   }
 `;
 
-export default function DateSlider({ slider, setSlider }) {
+export default function DateSlider({
+  dateList,
+  sliderDates,
+  sliderPickedDateRange,
+  setSliderDateRange,
+}) {
   // elements that return scoped dates
   // -2 0 +2
 
   const MAX = 10;
+  const [listDates, setListDates] = useState([]);
   const [value, setValue] = useState(0);
+
+  const [pickedDates, setPickedDates] = useState([]);
+  const [maxSliderValue, setMaxSliderValue] = useState(0);
+
+  useEffect(() => {
+    setListDates(dateList);
+    console.log(value);
+    setMaxSliderValue(dateList.length - 5);
+
+    setSliderDateRange(pickedDates);
+  }, [listDates, dateList]);
+
+  useEffect(() => {
+    setPickedDates(returnIndexPickedBySlider(listDates, value));
+  }, [value]);
+
+  function returnIndexPickedBySlider(listObject, value) {
+    const tempList = [
+      listObject.at(Number(value)),
+      listObject.at(Number(value) + 1),
+      listObject.at(Number(value) + 2),
+      listObject.at(Number(value) + 3),
+      listObject.at(Number(value) + 4),
+    ];
+    console.log(tempList);
+    return tempList;
+  }
 
   const getBackgroundSize = () => {
     return { backgroundSize: `${(value * 100) / MAX}% 100%` };
   };
 
-  //   if (slider >= 5) {
-  //     <Slider
-  //       min="0"
-  //       max={MAX}
-  //       onChange={(e) => setValue(e.target.value)}
-  //       style={getBackgroundSize()}
-  //       value={value}
-  //     />;
-  //   } else {
-  //     <Slider
-  //       min="0"
-  //       max={MAX}
-  //       onChange={(e) => setValue(e.target.value)}
-  //       style={getBackgroundSize()}
-  //       value={value}
-  //     />;
-  //   }
-  return (
-    <Slider
-      type="range"
-      min="0"
-      max={MAX}
-      onChange={(e) => setValue(e.target.value)}
-      style={getBackgroundSize()}
-      value={value}
-    ></Slider>
-  );
+  if (dateList.length > 6) {
+    return (
+      <Slider
+        type="range"
+        min={0}
+        max={maxSliderValue}
+        onChange={(e) => {
+          setValue(e.target.value);
+
+          console.log(pickedDates);
+        }}
+        style={getBackgroundSize()}
+        value={value}
+      ></Slider>
+    );
+  } else {
+    return "";
+  }
 }

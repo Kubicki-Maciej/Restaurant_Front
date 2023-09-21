@@ -22,20 +22,39 @@ export default function ManagerDateRange() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [diffranceInDays, setDiffranceInDays] = useState(0);
+  const [listOfPickedDates, setListOfPickedDates] = useState([]);
+  const [currentSliderPickedDates, setCurrentSliderPickedDates] = useState([]);
   const [slider, setSlider] = useState(0);
 
   useEffect(() => {
-    console.log(startDate);
-    console.log(endDate);
-
     timeDelta(startDate, endDate);
-  }, [startDate, endDate, diffranceInDays]);
+
+    setListOfPickedDates(createListOfPickedDates(startDate, endDate));
+  }, [startDate, endDate, diffranceInDays, currentSliderPickedDates]);
 
   function timeDelta(timeA, timeB) {
     let differenceInTime = timeB.getTime() - timeA.getTime();
     let differenceInDays = differenceInTime / (1000 * 3600 * 24);
     setDiffranceInDays(Math.round(differenceInDays));
     setSlider(Math.round(differenceInDays));
+  }
+
+  function createListOfPickedDates(start, end) {
+    for (
+      var arr = [], dt = new Date(start);
+      dt <= new Date(end + 1);
+      dt.setDate(dt.getDate() + 1)
+    ) {
+      arr.push(new Date(dt));
+    }
+
+    arr.push(end);
+
+    return arr;
+  }
+
+  function setCrurentSliderDate(date) {
+    // currentSliderPickedDates;
   }
 
   return (
@@ -49,7 +68,10 @@ export default function ManagerDateRange() {
           <DatePickerComponent date={endDate} setDate={setEndDate} />
         </div>
       </DateBox>
-      <DateSlider slider={slider} />
+      <DateSlider
+        dateList={listOfPickedDates}
+        setSliderDateRange={setCurrentSliderPickedDates}
+      />
     </DateAndSliderBox>
   );
 }
