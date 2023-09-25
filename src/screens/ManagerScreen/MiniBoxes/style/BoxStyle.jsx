@@ -12,6 +12,7 @@ export const BoxItem = styled.div`
   width: 400px;
   background-color: lightgrey;
   padding: 20px;
+  padding-bottom: 40px;
   border-radius: 5px;
 `;
 

@@ -138,29 +138,49 @@ export default function ManagerTableGrid() {
                 />
               </BoxItem>
               <BoxItem>
-                <BoxTitle>Kitchen Orders:</BoxTitle>
-                <MiniOrderBoard
+                <BoxTitle>Magazine Stock:</BoxTitle>
+                <BarMagazineStock
                   data={{
-                    waiting: [
-                      { id: 1, bill: 250, waiter_id: 1 },
-                      { id: 2, bill: 190, waiter_id: 1 },
-                      { id: 3, bill: 37, waiter_id: 2 },
-                      { id: 4, bill: 607, waiter_id: 2 },
-                      { id: 5, bill: 225, waiter_id: 2 },
-                    ],
-                    in_progress: [
-                      { id: 6, bill: 250, waiter_id: 1 },
-                      { id: 7, bill: 190, waiter_id: 1 },
-                      { id: 8, bill: 37, waiter_id: 2 },
-                      { id: 9, bill: 607, waiter_id: 2 },
-                      { id: 10, bill: 225, waiter_id: 2 },
+                    products: [
+                      {
+                        id: 1,
+                        name: "beef_meat",
+                        quantity: 10.0,
+                        good_stock_value: 30,
+                      },
+                      {
+                        id: 2,
+                        name: "chesse",
+                        quantity: 0.5,
+                        good_stock_value: 5,
+                      },
+                      {
+                        id: 3,
+                        name: "chesse",
+                        quantity: 0.5,
+                        good_stock_value: 5,
+                      },
+                      {
+                        id: 4,
+                        name: "chesse",
+                        quantity: 0.5,
+                        good_stock_value: 5,
+                      },
+                      {
+                        id: 5,
+                        name: "chesse",
+                        quantity: 0.5,
+                        good_stock_value: 5,
+                      },
+                      {
+                        id: 6,
+                        name: "chesse",
+                        quantity: 0.5,
+                        good_stock_value: 5,
+                      },
                     ],
                   }}
                 />
-              </BoxItem>
-              <BoxItem>
-                <BoxTitle>Magazine Stock:</BoxTitle>
-                <BarMagazineStock data={{}} />
               </BoxItem>
               <BoxItem>
                 <BoxTitle>Waiters Logged In/Out: </BoxTitle>
@@ -179,15 +199,21 @@ export default function ManagerTableGrid() {
               </BoxItem>
               <BoxItem>
                 <BoxTitle>Daily Profit:</BoxTitle>
+                <ManagerDateRange></ManagerDateRange>
                 <DailyProfit
                   data={{
-                    logged_in_waiters: [
-                      { id: 1, waiter_name: "Przemo" },
-                      { id: 2, waiter_name: "Maciej" },
-                    ],
-                    logged_out_waiters: [
-                      { id: 3, waiter_name: "Aleksandra" },
-                      { id: 4, waiter_name: "Kara" },
+                    dates: [
+                      { date: "2023-09-20", profit: 5003 },
+                      { date: "2023-09-21", profit: 5401 },
+                      { date: "2023-09-22", profit: 6020 },
+                      { date: "2023-09-23", profit: 4550 },
+                      { date: "2023-09-24", profit: 4060 },
+                      { date: "2023-09-25", profit: 0 },
+                      { date: "2023-09-26", profit: 5301 },
+                      { date: "2023-09-27", profit: 5001 },
+                      { date: "2023-09-28", profit: 5501 },
+                      { date: "2023-09-29", profit: 6401 },
+                      { date: "2023-09-30", profit: 4401 },
                     ],
                   }}
                 />
