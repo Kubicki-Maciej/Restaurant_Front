@@ -2,16 +2,21 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 // style
-import { BoxContainer, BoxItem } from "./style/BoxStyle";
+import { BoxContainer, BoxItem, BoxTitle } from "./style/BoxStyle";
 // data chart test
 import TestDataOrders from "../TestData/TestData";
 import TestDataWaiters from "../TestData/TestDataWaiters";
 // box bar components
 import ManagerDateRange from "./ManagerDateRange";
-// bar components
+// minibox components
 import BarChart from "./Charts/BarChart";
 import BarSoldMealsForDate from "./Charts/BarSoldMealsForDate";
 import BarWaitersEarnings from "./Charts/WaitersEarnings";
+import MiniOrder from "./CurrentWaitersOrders/MiniOrder";
+import MiniOrderBoard from "./CurrentKitchenOrders/MiniOrderBoard";
+import WaitersLoggedIn from "./CurrentWaitersOrders/WaitersLoggedIn";
+import BarMagazineStock from "./Charts/BarMagazineStock";
+import DailyProfit from "./Profit/DailyProfit";
 
 export default function ManagerTableGrid() {
   const [data, setData] = useState([]);
@@ -91,19 +96,6 @@ export default function ManagerTableGrid() {
         <div>
           {dishLoaded ? (
             <BoxContainer>
-              {/* <BoxItem>
-                Sold items in September:
-                {Object.entries(dataDish).map(([item, value]) => (
-                  <div>
-                    {item} : {value}
-                  </div>
-                ))}
-              </BoxItem>
-              <BoxItem>
-                Chart
-                <BarChart />
-              </BoxItem> */}
-
               <BoxItem>
                 <ManagerDateRange></ManagerDateRange>
                 <BarSoldMealsForDate data={dataDishDate} keys={dataNames} />
@@ -111,6 +103,94 @@ export default function ManagerTableGrid() {
               <BoxItem>
                 <ManagerDateRange></ManagerDateRange>
                 <BarWaitersEarnings data={dataWaiter} keys={testTableWaiters} />
+              </BoxItem>
+              <BoxItem>
+                <BoxTitle>Active Orders:</BoxTitle>
+                <MiniOrder
+                  data={[
+                    { id: 1, bill: 250, waiter_id: 1 },
+                    { id: 2, bill: 190, waiter_id: 1 },
+                    { id: 3, bill: 37, waiter_id: 2 },
+                    { id: 4, bill: 607, waiter_id: 2 },
+                    { id: 5, bill: 225, waiter_id: 2 },
+                  ]}
+                />
+              </BoxItem>
+              <BoxItem>
+                <BoxTitle>Kitchen Orders:</BoxTitle>
+                <MiniOrderBoard
+                  data={{
+                    waiting: [
+                      { id: 1, bill: 250, waiter_id: 1 },
+                      { id: 2, bill: 190, waiter_id: 1 },
+                      { id: 3, bill: 37, waiter_id: 2 },
+                      { id: 4, bill: 607, waiter_id: 2 },
+                      { id: 5, bill: 225, waiter_id: 2 },
+                    ],
+                    in_progress: [
+                      { id: 6, bill: 250, waiter_id: 1 },
+                      { id: 7, bill: 190, waiter_id: 1 },
+                      { id: 8, bill: 37, waiter_id: 2 },
+                      { id: 9, bill: 607, waiter_id: 2 },
+                      { id: 10, bill: 225, waiter_id: 2 },
+                    ],
+                  }}
+                />
+              </BoxItem>
+              <BoxItem>
+                <BoxTitle>Kitchen Orders:</BoxTitle>
+                <MiniOrderBoard
+                  data={{
+                    waiting: [
+                      { id: 1, bill: 250, waiter_id: 1 },
+                      { id: 2, bill: 190, waiter_id: 1 },
+                      { id: 3, bill: 37, waiter_id: 2 },
+                      { id: 4, bill: 607, waiter_id: 2 },
+                      { id: 5, bill: 225, waiter_id: 2 },
+                    ],
+                    in_progress: [
+                      { id: 6, bill: 250, waiter_id: 1 },
+                      { id: 7, bill: 190, waiter_id: 1 },
+                      { id: 8, bill: 37, waiter_id: 2 },
+                      { id: 9, bill: 607, waiter_id: 2 },
+                      { id: 10, bill: 225, waiter_id: 2 },
+                    ],
+                  }}
+                />
+              </BoxItem>
+              <BoxItem>
+                <BoxTitle>Magazine Stock:</BoxTitle>
+                <BarMagazineStock data={{}} />
+              </BoxItem>
+              <BoxItem>
+                <BoxTitle>Waiters Logged In/Out: </BoxTitle>
+                <WaitersLoggedIn
+                  data={{
+                    logged_in_waiters: [
+                      { id: 1, waiter_name: "Przemo" },
+                      { id: 2, waiter_name: "Maciej" },
+                    ],
+                    logged_out_waiters: [
+                      { id: 3, waiter_name: "Aleksandra" },
+                      { id: 4, waiter_name: "Kara" },
+                    ],
+                  }}
+                />
+              </BoxItem>
+              <BoxItem>
+                <BoxTitle>Daily Profit:</BoxTitle>
+                <DailyProfit
+                  data={{
+                    logged_in_waiters: [
+                      { id: 1, waiter_name: "Przemo" },
+                      { id: 2, waiter_name: "Maciej" },
+                    ],
+                    logged_out_waiters: [
+                      { id: 3, waiter_name: "Aleksandra" },
+                      { id: 4, waiter_name: "Kara" },
+                    ],
+                  }}
+                />
               </BoxItem>
             </BoxContainer>
           ) : (

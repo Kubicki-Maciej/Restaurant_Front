@@ -6,8 +6,6 @@ import ManagerTableGrid from "../MiniBoxes/ManagerTableGrid";
 export default function DashboardCard() {
   return (
     <div className="Screen">
-      {/* <ManagerBarGrid /> */}
-      {/* <ManagerInfoGrid /> */}
       <ManagerTableGrid />
     </div>
   );

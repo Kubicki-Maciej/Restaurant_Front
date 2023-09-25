@@ -14,3 +14,8 @@ export const BoxItem = styled.div`
   padding: 20px;
   border-radius: 5px;
 `;
+
+export const BoxTitle = styled.h4`
+  margin-top: 3px;
+  margin-bottom: 3px;
+`;
