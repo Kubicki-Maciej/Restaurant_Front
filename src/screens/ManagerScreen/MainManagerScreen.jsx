@@ -9,6 +9,10 @@ import ManagerNavbar from "./ManagerNavBar/ManagerNavBar";
 
 // cards
 import DashboardCard from "./ManagerCards/DashboardCard";
+import WaiterCard from "./ManagerCards/WaiterCard";
+import KitchenCard from "./ManagerCards/KitchenCard";
+import MenuCard from "./ManagerCards/MenuCard";
+import StorageCard from "./ManagerCards/StorageCard";
 
 // Style
 const MainScreen = styled.div``;
@@ -16,7 +20,7 @@ const AppScreen = styled.div``;
 
 const ConntentScreen = styled.div`
   width: 100%;
-  margin: 0.5rem;
+  /* margin: 0.5rem; */
 `;
 
 const client = axios.create({
@@ -39,6 +43,10 @@ function MainManagerScreen() {
       <ConntentScreen>
         <Routes>
           <Route path="dashboard" element={<DashboardCard />}></Route>
+          <Route path="waiters/*" element={<WaiterCard />}></Route>
+          <Route path="kitchen/*" element={<KitchenCard />}></Route>
+          <Route path="menu/*" element={<MenuCard />}></Route>
+          <Route path="storage/*" element={<StorageCard />}></Route>
         </Routes>
       </ConntentScreen>
       {/* create user section */}

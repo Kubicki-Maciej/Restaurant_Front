@@ -13,6 +13,7 @@ const NavBar = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  z-index: 100;
 `;
 
 const NavBarItem = styled.div`
