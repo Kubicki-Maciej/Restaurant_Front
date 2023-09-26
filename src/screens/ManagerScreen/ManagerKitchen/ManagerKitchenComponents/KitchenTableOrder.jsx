@@ -4,17 +4,22 @@ import {
   TableConainer,
   TableKitchen,
   RowTableKitchen,
+  Conainer,
 } from "./ManagerKitchenStyle";
 import KitchenReadOnlyRow from "./KitchenReadOnlyRow";
-import { Fragment } from "react";
 
-export default function KitchenTableOrder({ data, name }) {
+export default function KitchenTableOrder({
+  maintheme,
+  sColortheme,
+  data,
+  name,
+}) {
   const [orderData, setOrderData] = useState(data);
   console.log(orderData);
 
   return (
-    <div>
-      {name}
+    <Conainer>
+      <h1>{name}</h1>
       <TableConainer>
         <TableKitchen>
           <thead>
@@ -27,11 +32,15 @@ export default function KitchenTableOrder({ data, name }) {
           </thead>
           <tbody>
             {orderData.map((order) => (
-              <KitchenReadOnlyRow order={order} />
+              <KitchenReadOnlyRow
+                order={order}
+                theme={maintheme}
+                stheme={sColortheme}
+              />
             ))}
           </tbody>
         </TableKitchen>
       </TableConainer>
-    </div>
+    </Conainer>
   );
 }

@@ -7,6 +7,8 @@ export default function ShowCurrentOrders() {
   return (
     <CurrentOrderContainer>
       <KitchenTableOrder
+        maintheme={"#CDEBF8"}
+        sColortheme={"#B4E4F8"}
         name={"In Progress"}
         data={[
           {
@@ -42,6 +44,8 @@ export default function ShowCurrentOrders() {
         ]}
       />
       <KitchenTableOrder
+        maintheme={"#CDEBF8"}
+        sColortheme={"#B4E4F8"}
         name={"Waiting"}
         data={[
           {

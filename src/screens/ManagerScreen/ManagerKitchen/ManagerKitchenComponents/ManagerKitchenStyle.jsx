@@ -11,6 +11,13 @@ const TableConainer = styled.div`
   gap: 10px;
   padding: 1rem;
 `;
+const Conainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 1px black solid;
+  margin: 1rem;
+`;
 
 const TableKitchen = styled.table`
   border-collapse: collapse;
@@ -29,7 +36,8 @@ const ColumnTableKitchen = styled.td`
   text-align: left;
   padding: 8px;
   font-size: 1rem;
-  background-color: rgb(205, 235, 253);
+  /* background-color: rgb(205, 235, 253); */
+  background-color: ${(props) => props.bg};
 `;
 
 const ChangeWaiterForm = styled.form``;
@@ -73,4 +81,5 @@ export {
   ChangeWaiterForm,
   Button,
   CurrentOrderContainer,
+  Conainer,
 };
