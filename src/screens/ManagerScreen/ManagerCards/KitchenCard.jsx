@@ -21,7 +21,7 @@ export default function KitchenCard() {
     <ConntentScreen className="ContentScreen">
       <ManagerSideBar
         menuList={[
-          { direction: "./todaysorders", title: "Todays Orders" },
+          { direction: "./todaysorders", title: "Open Orders" },
           { direction: "./showorders", title: "Show All Orders" },
         ]}
       />

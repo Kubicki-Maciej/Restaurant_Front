@@ -72,7 +72,7 @@ export default function BarMagazineStock({ data }) {
             },
           }}
           pageSizeOptions={[7]}
-          checkboxSelection
+          // checkboxSelection
           sx={{
             "& .MuiDataGrid-cell": {
               padding: 0,
