@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+const CurrentOrderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const TableConainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -7,19 +12,19 @@ const TableConainer = styled.div`
   padding: 1rem;
 `;
 
-const TableWaiter = styled.table`
+const TableKitchen = styled.table`
   border-collapse: collapse;
   width: 100%;
 `;
 
-const RowTableWaiter = styled.th`
+const RowTableKitchen = styled.th`
   border: 1px solid #ffffff;
   text-align: left;
   padding: 8px;
   font-size: 20px;
   background-color: rgb(117, 201, 250);
 `;
-const ColumnTableWaiter = styled.td`
+const ColumnTableKitchen = styled.td`
   border: 1px solid #ffffff;
   text-align: left;
   padding: 8px;
@@ -62,9 +67,10 @@ const Button = styled.button`
 
 export {
   TableConainer,
-  TableWaiter,
-  RowTableWaiter,
-  ColumnTableWaiter,
+  RowTableKitchen,
+  TableKitchen,
+  ColumnTableKitchen,
   ChangeWaiterForm,
   Button,
+  CurrentOrderContainer,
 };
