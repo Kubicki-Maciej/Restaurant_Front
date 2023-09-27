@@ -12,10 +12,10 @@ const DataGridBox = styled.div`
 
 // const VISIBLE_FIELDS = ["name", "rating", "country", "dateCreated", "isAdmin"];
 
-export default function WaitersOrders() {
+export default function WaitersOrders({ setSecondElement }) {
   const [dataOrders, setDataOrders] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  setSecondElement("> Waiters Orders");
   useEffect(() => {
     setDataOrders(dataCreation());
     setLoading(true);

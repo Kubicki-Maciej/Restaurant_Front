@@ -9,7 +9,8 @@ import {
   ChangeWaiterForm,
 } from "./ManagerWaiterComponents/ManagerWaiterStyle";
 
-export default function ModifyWaiter() {
+export default function ModifyWaiter({ setSecondElement }) {
+  setSecondElement("> Modify Waiters Data");
   const waiterData = [
     {
       id: 1,

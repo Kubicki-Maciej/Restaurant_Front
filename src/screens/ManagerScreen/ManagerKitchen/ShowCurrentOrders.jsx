@@ -2,8 +2,9 @@ import React from "react";
 import KitchenTableOrder from "./ManagerKitchenComponents/KitchenTableOrder";
 import { CurrentOrderContainer } from "./ManagerKitchenComponents/ManagerKitchenStyle";
 
-export default function ShowCurrentOrders() {
+export default function ShowCurrentOrders({ setSecondElement }) {
   // Data Grid
+  setSecondElement("Current Orders");
   return (
     <CurrentOrderContainer>
       <KitchenTableOrder

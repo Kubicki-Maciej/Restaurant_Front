@@ -20,7 +20,8 @@ const ConntentScreen = styled.div`
   height: 100%;
 `;
 
-export default function MenuCard() {
+export default function MenuCard({ setSecondElement }) {
+  setSecondElement("");
   return (
     <ConntentScreen className="ContentScreen">
       <ManagerSideBar
@@ -39,16 +40,36 @@ export default function MenuCard() {
       />
 
       <Routes>
-        <Route path="createdish" element={<Createdish />}></Route>
-        <Route path="changedish" element={<ChangeDish />}></Route>
-        <Route path="createcategory" element={<CreateCategory />}></Route>
-        <Route path="adddishtocategory" element={<AddDishCategory />}></Route>
+        <Route
+          path="createdish"
+          element={<Createdish setSecondElement={setSecondElement} />}
+        ></Route>
+        <Route
+          path="changedish"
+          element={<ChangeDish setSecondElement={setSecondElement} />}
+        ></Route>
+        <Route
+          path="createcategory"
+          element={<CreateCategory setSecondElement={setSecondElement} />}
+        ></Route>
+        <Route
+          path="adddishtocategory"
+          element={<AddDishCategory setSecondElement={setSecondElement} />}
+        ></Route>
         <Route
           path="removedishfromcategory"
-          element={<RemoveDishFromCategory />}
+          element={
+            <RemoveDishFromCategory setSecondElement={setSecondElement} />
+          }
         ></Route>
-        <Route path="hidecategory" element={<HideCategory />}></Route>
-        <Route path="showcategory" element={<ShowCategory />}></Route>
+        <Route
+          path="hidecategory"
+          element={<HideCategory setSecondElement={setSecondElement} />}
+        ></Route>
+        <Route
+          path="showcategory"
+          element={<ShowCategory setSecondElement={setSecondElement} />}
+        ></Route>
       </Routes>
     </ConntentScreen>
   );

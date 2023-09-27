@@ -28,6 +28,7 @@ const client = axios.create({
 });
 
 function MainManagerScreen() {
+  const [secondElement, setSecondElement] = useState("");
   const [categoryData, setCategoryData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -38,14 +39,26 @@ function MainManagerScreen() {
 
   return (
     <div>
-      <ManagerNavbar />
+      <ManagerNavbar secondScope={secondElement} />
       {/* Mini bars */}
       <ConntentScreen>
         <Routes>
-          <Route path="dashboard" element={<DashboardCard />}></Route>
-          <Route path="waiters/*" element={<WaiterCard />}></Route>
-          <Route path="kitchen/*" element={<KitchenCard />}></Route>
-          <Route path="menu/*" element={<MenuCard />}></Route>
+          <Route
+            path="dashboard"
+            element={<DashboardCard setSecondElement={setSecondElement} />}
+          ></Route>
+          <Route
+            path="waiters/*"
+            element={<WaiterCard setSecondElement={setSecondElement} />}
+          ></Route>
+          <Route
+            path="kitchen/*"
+            element={<KitchenCard setSecondElement={setSecondElement} />}
+          ></Route>
+          <Route
+            path="menu/*"
+            element={<MenuCard setSecondElement={setSecondElement} />}
+          ></Route>
           <Route path="storage/*" element={<StorageCard />}></Route>
         </Routes>
       </ConntentScreen>

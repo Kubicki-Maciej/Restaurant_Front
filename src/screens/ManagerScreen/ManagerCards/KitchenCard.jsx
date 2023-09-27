@@ -16,7 +16,8 @@ const ConntentScreen = styled.div`
   height: 100%;
 `;
 
-export default function KitchenCard() {
+export default function KitchenCard({ setSecondElement }) {
+  setSecondElement("");
   return (
     <ConntentScreen className="ContentScreen">
       <ManagerSideBar
@@ -27,8 +28,14 @@ export default function KitchenCard() {
       />
 
       <Routes>
-        <Route path="todaysorders" element={<ShowCurrentOrders />}></Route>
-        <Route path="showorders" element={<ShowOrders />}></Route>
+        <Route
+          path="todaysorders"
+          element={<ShowCurrentOrders setSecondElement={setSecondElement} />}
+        ></Route>
+        <Route
+          path="showorders"
+          element={<ShowOrders setSecondElement={setSecondElement} />}
+        ></Route>
       </Routes>
     </ConntentScreen>
   );

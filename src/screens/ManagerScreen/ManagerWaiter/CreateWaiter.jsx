@@ -102,7 +102,8 @@ const onSubmit = (values) => {
   console.log(values);
 };
 
-export default function CreateWaiter() {
+export default function CreateWaiter({ setSecondElement }) {
+  setSecondElement("> Create Waiter");
   return (
     <FormContainer>
       <Formik

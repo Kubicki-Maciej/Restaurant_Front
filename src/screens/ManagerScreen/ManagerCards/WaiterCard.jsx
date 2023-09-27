@@ -16,7 +16,8 @@ const ConntentScreen = styled.div`
   height: 100%;
 `;
 
-export default function WaiterCard() {
+export default function WaiterCard({ setSecondElement }) {
+  setSecondElement("");
   return (
     <ConntentScreen className="ContentScreen">
       <ManagerSideBar
@@ -28,9 +29,18 @@ export default function WaiterCard() {
       />
 
       <Routes>
-        <Route path="createwaiter" element={<CreateWaiter />}></Route>
-        <Route path="showorder" element={<WaitersOrders />}></Route>
-        <Route path="modify" element={<ModifyWaiter />}></Route>
+        <Route
+          path="createwaiter"
+          element={<CreateWaiter setSecondElement={setSecondElement} />}
+        ></Route>
+        <Route
+          path="showorder"
+          element={<WaitersOrders setSecondElement={setSecondElement} />}
+        ></Route>
+        <Route
+          path="modify"
+          element={<ModifyWaiter setSecondElement={setSecondElement} />}
+        ></Route>
       </Routes>
     </ConntentScreen>
   );
