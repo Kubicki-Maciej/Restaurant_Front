@@ -6,7 +6,11 @@ import { useState, useEffect } from "react";
 import SelectedProductTable from "./SelectedProductTable";
 const animatedComponents = makeAnimated();
 
-export default function SelectProducts({ productList, chosedProducts }) {
+export default function SelectProducts({
+  productList,
+  chosedProducts,
+  productTypes,
+}) {
   const [userChoice, setUserChoice] = useState([]);
 
   useEffect(() => {
@@ -27,6 +31,7 @@ export default function SelectProducts({ productList, chosedProducts }) {
       />
       <SelectedProductTable
         selectedProducts={userChoice}
+        productTypes={productTypes}
       ></SelectedProductTable>
     </div>
   );

@@ -8,9 +8,17 @@ const FormLabel = styled.label`
 const CreateDishContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  /* align-items: center; */
+  width: 100%;
 `;
 
 const FormElement = styled.div`
+  margin: 5px 10px 5px 10px;
+  display: flex;
+  flex-direction: column;
+`;
+const FormBox = styled.div`
   margin: 5px 10px 5px 10px;
   display: flex;
   flex-direction: column;
@@ -65,4 +73,5 @@ export {
   ProductTable,
   FormElementButton,
   FormButton,
+  FormBox,
 };

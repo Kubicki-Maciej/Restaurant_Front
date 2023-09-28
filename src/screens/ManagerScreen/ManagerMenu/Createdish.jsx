@@ -8,9 +8,10 @@ import {
   CreateDishContainer,
   FormElementButton,
   FormButton,
+  FormBox,
 } from "./ManagerMenuComponent/ManagerMenuStyle";
 
-import SelectProducts from "./ManagerMenuComponent/SelectProducts";
+import SelectProducts from "./ManagerMenuComponent/CreateDish/SelectProducts";
 
 const validate = (values) => {
   const errors = {};
@@ -33,10 +34,19 @@ export default function Createdish({ setSecondElement }) {
 
   function getListOfIngridientsToProduct() {
     // connect api and get ingredients
+
     return [
       { value: "meet", label: "Meet" },
       { value: "chesse", label: "Chesse" },
       { value: "roll", label: "Roll" },
+    ];
+  }
+
+  function productNumberType() {
+    return [
+      { id: "meet", type: "kg" },
+      { id: "chesse", type: "kg" },
+      { id: "roll", type: "p" },
     ];
   }
 
@@ -48,13 +58,13 @@ export default function Createdish({ setSecondElement }) {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validate={validate}
-      onSubmit={onSubmit}
-    >
-      <Form>
-        <CreateDishContainer>
+    <CreateDishContainer>
+      <Formik
+        initialValues={initialValues}
+        validate={validate}
+        onSubmit={onSubmit}
+      >
+        <Form>
           <FormElement>
             <FormLabel htmlFor="dishname">Dish Name:</FormLabel>
             <Field type="text" name="dishname"></Field>
@@ -69,16 +79,16 @@ export default function Createdish({ setSecondElement }) {
               </FormButton>
             </FormElementButton>
           </FormElement>
-
-          <ProductTable>
-            <h3>Products used:</h3>
-            <SelectProducts
-              productList={getListOfIngridientsToProduct()}
-              chosedProducts={setChosedProducts}
-            />
-          </ProductTable>
-        </CreateDishContainer>
-      </Form>
-    </Formik>
+        </Form>
+      </Formik>
+      <ProductTable>
+        <h3>Products used:</h3>
+        <SelectProducts
+          productList={getListOfIngridientsToProduct()}
+          chosedProducts={setChosedProducts}
+          productTypes={productNumberType()}
+        />
+      </ProductTable>
+    </CreateDishContainer>
   );
 }
