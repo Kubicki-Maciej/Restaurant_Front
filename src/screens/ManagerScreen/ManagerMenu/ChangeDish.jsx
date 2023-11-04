@@ -36,7 +36,7 @@ export default function ChangeDish() {
 
   const allProducts = [
     { id: 1, name: "meet", type: "kg" },
-    { id: 2, name: "roll", type: "kg" },
+    { id: 2, name: "roll", type: "p" },
     { id: 3, name: "chesse", type: "kg" },
     { id: 4, name: "becon", type: "kg" },
   ];

@@ -2,16 +2,59 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { ResponsiveBar } from "@nivo/bar";
 
-export default function BarSoldMealsForDate({ data, key }) {
+import axios from "axios";
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.withCredentials = true;
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
+
+export default function BarSoldMealsForDate({ data, key, data_chosse }) {
   // takes food data from x day and present it on charts
   const [keys, setKeys] = useState([]);
   const [dataBars, setDataBars] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [dataSoldDish, setDataSoldDish] = useState([]);
+  const [error, setError] = useState(null);
+
+  async function getSoldDishData() {
+    client
+      .get(`/dashboard/t`)
+      .then((actualData) => {
+        setDataSoldDish(actualData.data);
+        console.log("actualData");
+        console.log(actualData.data);
+        console.log(dataConverter(actualData.data));
+      })
+      .catch((err) => {
+        setError(err.message);
+        setDataSoldDish(null);
+      })
+      .finally(() => {
+        setLoading(true);
+      });
+  }
+
+  async function getDishNames() {
+    client
+      .get(`/dashboard/dishnames`)
+      .then()
+      .catch((err) => {
+        setError(err.message);
+      });
+  }
 
   useEffect(() => {
+    getSoldDishData();
     setDataBars(dataConverter(data));
-    // console.log(dataBars);
+
     setKeys([
+      "Fries",
+      "Burger",
+      "Chiken Burger",
       "Yorkshire Pudding",
       "Fish and Chips",
       "English Pancakes",
@@ -19,7 +62,7 @@ export default function BarSoldMealsForDate({ data, key }) {
       "Black Pudding",
       "Trifle",
       "Full English Breakfas",
-      "Toad in the",
+      "Toad in thes",
     ]);
     setLoaded(true);
   }, [loaded]);
@@ -29,25 +72,40 @@ export default function BarSoldMealsForDate({ data, key }) {
   function colorPicker() {}
 
   function dataConverter(dataInput) {
+    // data looks like     {
+    //       "2023-10-18": {
+    //         "Fries": 3,
+    //         "Burger": 7,
+    //         "Chiken Burger": 1
+    //     }
+    // },
+    // modify data converter to return good values
+
     // convert data and sort by data
     const objectList = [];
+    console.log(dataInput);
+    console.log("zaczyna dzialac data converter");
     Object.entries(dataInput).map(([date, value]) => {
-      let listOfMealNames = [];
-      let listOfNumberOfMealsOrdered = [];
+      if (Object.keys(value).length === 0) {
+        console.log("pustyyyy obiekt");
+      } else {
+        let listOfMealNames = [];
+        let listOfNumberOfMealsOrdered = [];
 
-      Object.entries(value).map(([name, number]) => {
-        listOfMealNames.push(name);
-        listOfNumberOfMealsOrdered.push(number);
-      });
+        Object.entries(value).map(([name, number]) => {
+          listOfMealNames.push(name);
+          listOfNumberOfMealsOrdered.push(number);
+        });
 
-      let tempObject = {
-        // date: new Date(Date.parse(date)),
-        date: date,
-      };
-      for (let i = 0; i < listOfMealNames.length; i++) {
-        tempObject[listOfMealNames[i]] = listOfNumberOfMealsOrdered[i];
+        let tempObject = {
+          // date: new Date(Date.parse(date)),
+          date: date,
+        };
+        for (let i = 0; i < listOfMealNames.length; i++) {
+          tempObject[listOfMealNames[i]] = listOfNumberOfMealsOrdered[i];
+        }
+        objectList.push(tempObject);
       }
-      objectList.push(tempObject);
     });
 
     const compareByDate = (a, b) => {
@@ -67,10 +125,10 @@ export default function BarSoldMealsForDate({ data, key }) {
     return objectList.slice(0, 5);
   }
 
-  if (loaded) {
+  if (loading) {
     return (
       <ResponsiveBar
-        data={dataBars}
+        data={dataSoldDish}
         keys={keys}
         indexBy="date"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
@@ -78,40 +136,40 @@ export default function BarSoldMealsForDate({ data, key }) {
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
         colors={{ scheme: "nivo" }}
-        defs={[
-          {
-            id: "dots",
-            type: "patternDots",
-            background: "inherit",
-            color: "#38bcb2",
-            size: 4,
-            padding: 1,
-            stagger: true,
-          },
-          {
-            id: "lines",
-            type: "patternLines",
-            background: "inherit",
-            color: "#eed312",
-            rotation: -45,
-            lineWidth: 6,
-            spacing: 10,
-          },
-        ]}
-        fill={[
-          {
-            match: {
-              id: "English Pancakes",
-            },
-            id: "dots",
-          },
-          {
-            match: {
-              id: "sandwich",
-            },
-            id: "lines",
-          },
-        ]}
+        // defs={[
+        //   {
+        //     id: "dots",
+        //     type: "patternDots",
+        //     background: "inherit",
+        //     color: "#38bcb2",
+        //     size: 4,
+        //     padding: 1,
+        //     stagger: true,
+        //   },
+        //   {
+        //     id: "lines",
+        //     type: "patternLines",
+        //     background: "inherit",
+        //     color: "#eed312",
+        //     rotation: -45,
+        //     lineWidth: 6,
+        //     spacing: 10,
+        //   },
+        // ]}
+        // fill={[
+        //   {
+        //     match: {
+        //       id: "English Pancakes",
+        //     },
+        //     id: "dots",
+        //   },
+        //   {
+        //     match: {
+        //       id: "sandwich",
+        //     },
+        //     id: "lines",
+        //   },
+        // ]}
         borderColor={{
           from: "color",
           modifiers: [["darker", 1.6]],

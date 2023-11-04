@@ -31,7 +31,6 @@ export default function StorageCard() {
           },
           { direction: "./createnewstorage", title: "Create New Storage" },
           { direction: "./updatestorage", title: "Update Storage" },
-          { direction: "./removeproduct", title: "Remove Product" },
         ]}
       />
 
@@ -42,7 +41,7 @@ export default function StorageCard() {
         ></Route>
         <Route path="createnewstorage" element={<CreateNewStorgae />}></Route>
         <Route path="createproduct" element={<NewProduct />}></Route>
-        <Route path="removeproduct" element={<RemoveProduct />}></Route>
+
         <Route path="updatestorage" element={<UpdateStorage />}></Route>
       </Routes>
     </ConntentScreen>

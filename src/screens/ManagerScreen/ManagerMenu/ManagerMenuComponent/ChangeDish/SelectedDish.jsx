@@ -77,6 +77,11 @@ export default function SelectedDish({
         ) : (
           <input value={productName} onChange={handleEditFormChange}></input>
         )}
+        {buttonAction ? (
+          <button onClick={() => actionChangeName()}>edit name</button>
+        ) : (
+          <button onClick={() => actionChangeName()}>save name</button>
+        )}
       </th>
 
       <th>
@@ -96,11 +101,6 @@ export default function SelectedDish({
       </th>
       <th>{productInfo.price}</th>
       <th>
-        {buttonAction ? (
-          <button onClick={() => actionChangeName()}>edit</button>
-        ) : (
-          <button onClick={() => actionChangeName()}>save</button>
-        )}
         {buttonActionChangeProduct ? (
           <button onClick={() => actionChangeProduct()}>edit product</button>
         ) : (
