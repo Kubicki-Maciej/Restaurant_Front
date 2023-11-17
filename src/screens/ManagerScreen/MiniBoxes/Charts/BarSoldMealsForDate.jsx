@@ -11,23 +11,36 @@ const client = axios.create({
   baseURL: "http://127.0.0.1:8000/",
 });
 
-export default function BarSoldMealsForDate({ data, key, data_chosse }) {
+export default function BarSoldMealsForDate({
+  dataRange,
+  dataChosse,
+  dataRangeChanged,
+  dateStart,
+  dateEmd,
+}) {
   // takes food data from x day and present it on charts
   const [keys, setKeys] = useState([]);
   const [dataBars, setDataBars] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [dataSoldDish, setDataSoldDish] = useState([]);
+  const [dataPickedSoldDish, setPickedDataSoldDish] = useState([]);
   const [error, setError] = useState(null);
 
   async function getSoldDishData() {
+    console.log("ping data");
+    let dataPostRange = {
+      startDate: dataRange[0],
+      dateEnd: dataRange[1],
+    };
+
     client
-      .get(`/dashboard/t`)
+      .post(`/dashboard/t`, dataPostRange)
       .then((actualData) => {
-        setDataSoldDish(actualData.data);
-        console.log("actualData");
-        console.log(actualData.data);
-        console.log(dataConverter(actualData.data));
+        // DATA RANGE POST always send 5 dates current and -4 days in post
+        // 2) that should restart if ManagerDateSlider is changed value 1 and 2
+        setDataSoldDish(dataConverter(actualData.data["dates"]));
+        setKeys(actualData.data["names"]);
       })
       .catch((err) => {
         setError(err.message);
@@ -38,97 +51,76 @@ export default function BarSoldMealsForDate({ data, key, data_chosse }) {
       });
   }
 
-  async function getDishNames() {
-    client
-      .get(`/dashboard/dishnames`)
-      .then()
-      .catch((err) => {
-        setError(err.message);
-      });
-  }
+  useEffect(() => {
+    console.log("refresh data");
+    getSoldDishData();
+    setLoaded(true);
+  }, [dataRange[0], dataRange[1]]);
 
   useEffect(() => {
-    getSoldDishData();
-    setDataBars(dataConverter(data));
+    // console.log("dataRange");
+    // console.log(dataRange);
+    // console.log("zmiana dataChosse");
+    console.log(dataChosse);
+    setPickedDataSoldDish();
+    getPickedData(dataChosse);
 
-    setKeys([
-      "Fries",
-      "Burger",
-      "Chiken Burger",
-      "Yorkshire Pudding",
-      "Fish and Chips",
-      "English Pancakes",
-      "Shepherds Pie",
-      "Black Pudding",
-      "Trifle",
-      "Full English Breakfas",
-      "Toad in thes",
-    ]);
-    setLoaded(true);
-  }, [loaded]);
+    // dataChosse zwraca element listy
+  }, [dataChosse]);
 
   function colorFillChanger() {}
 
   function colorPicker() {}
 
+  function getPickedData(dataChosse) {
+    // if length between two dates is lower then 5 just give last 5 elements
+    //
+
+    // is value in DateSlider.jsx
+    const pickedRangeObjects = [
+      dataSoldDish.at(Number(dataChosse)),
+      dataSoldDish.at(Number(dataChosse) + 1),
+      dataSoldDish.at(Number(dataChosse) + 2),
+      dataSoldDish.at(Number(dataChosse) + 3),
+      dataSoldDish.at(Number(dataChosse) + 4),
+    ];
+
+    console.log(pickedRangeObjects);
+
+    return pickedRangeObjects;
+  }
+
   function dataConverter(dataInput) {
-    // data looks like     {
-    //       "2023-10-18": {
-    //         "Fries": 3,
-    //         "Burger": 7,
-    //         "Chiken Burger": 1
-    //     }
-    // },
-    // modify data converter to return good values
-
-    // convert data and sort by data
     const objectList = [];
-    console.log(dataInput);
-    console.log("zaczyna dzialac data converter");
-    Object.entries(dataInput).map(([date, value]) => {
-      if (Object.keys(value).length === 0) {
-        console.log("pustyyyy obiekt");
+
+    dataInput.forEach((key, meal_object) => {});
+    Object.entries(dataInput).map(([keyDate, valueDate]) => {
+      const tempObject = {
+        date: Object.keys(valueDate)[0],
+        // date: Object.keys(valueDate)[0].substring(5),
+      };
+      if (Object.keys(valueDate).length === 0) {
       } else {
-        let listOfMealNames = [];
-        let listOfNumberOfMealsOrdered = [];
+        // valueDate;
+      }
 
-        Object.entries(value).map(([name, number]) => {
-          listOfMealNames.push(name);
-          listOfNumberOfMealsOrdered.push(number);
+      Object.entries(valueDate).map(([key, valueMeal]) => {
+        const mealLenght = Object.keys(valueMeal);
+        mealLenght.forEach((meal) => {
+          tempObject[meal] = valueMeal[meal];
         });
-
-        let tempObject = {
-          // date: new Date(Date.parse(date)),
-          date: date,
-        };
-        for (let i = 0; i < listOfMealNames.length; i++) {
-          tempObject[listOfMealNames[i]] = listOfNumberOfMealsOrdered[i];
-        }
-        objectList.push(tempObject);
-      }
+      });
+      objectList.push(tempObject);
     });
-
-    const compareByDate = (a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      if (dateA < dateB) {
-        return -1;
-      }
-      if (dateA > dateB) {
-        return 1;
-      }
-      return 0;
-    };
-
-    objectList.sort(compareByDate);
-    // create component that return selected data
-    return objectList.slice(0, 5);
+    // console.log(objectList);
+    return objectList;
   }
 
   if (loading) {
     return (
       <ResponsiveBar
-        data={dataSoldDish}
+        data={getPickedData(dataChosse)}
+        // data={dataSoldDish}
         keys={keys}
         indexBy="date"
         margin={{ top: 50, right: 130, bottom: 50, left: 60 }}

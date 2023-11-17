@@ -18,7 +18,10 @@ const DateAndSliderBox = styled.div`
   justify-content: space-evenly;
 `;
 
-export default function ManagerDateRange() {
+export default function ManagerDateRange({
+  setRangeDateState,
+  setPickedDates,
+}) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [diffranceInDays, setDiffranceInDays] = useState(0);
@@ -28,9 +31,20 @@ export default function ManagerDateRange() {
 
   useEffect(() => {
     timeDelta(startDate, endDate);
-
+    console.log("wyliczenie delty");
     setListOfPickedDates(createListOfPickedDates(startDate, endDate));
-  }, [startDate, endDate, diffranceInDays, currentSliderPickedDates]);
+
+    setRangeDateState([startDate, endDate]);
+    console.log("setRangeDateState([startDate, endDate])");
+
+    // setPickedDates(listOfPickedDates);
+
+    console.log(listOfPickedDates);
+  }, [startDate, endDate, diffranceInDays]);
+
+  useEffect(() => {
+    console.log(startDate);
+  }, [startDate]);
 
   function timeDelta(timeA, timeB) {
     let differenceInTime = timeB.getTime() - timeA.getTime();
@@ -47,9 +61,7 @@ export default function ManagerDateRange() {
     ) {
       arr.push(new Date(dt));
     }
-
     arr.push(end);
-
     return arr;
   }
 
@@ -70,7 +82,7 @@ export default function ManagerDateRange() {
       </DateBox>
       <DateSlider
         dateList={listOfPickedDates}
-        setSliderDateRange={setCurrentSliderPickedDates}
+        setSliderDateRange={setPickedDates}
       />
     </DateAndSliderBox>
   );

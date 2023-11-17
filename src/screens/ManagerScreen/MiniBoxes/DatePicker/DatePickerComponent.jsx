@@ -1,10 +1,19 @@
 import React from "react";
-// import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import styled from "styled-components";
 
 export default function DatePickerComponent({ date, setDate, functionDate }) {
-  // const [startDate, setStartDate] = useState(new Date());
+  const [pickedDate, setPickedDate] = useState(new Date());
+
+  // useEffect(() => {
+  //   console.log("test date");
+  //   console.log(pickedDate);
+  //   setDate(date);
+  // }, [pickedDate]);
+
+  // function onDateChange(date){
+
+  // }
 
   return (
     <div>

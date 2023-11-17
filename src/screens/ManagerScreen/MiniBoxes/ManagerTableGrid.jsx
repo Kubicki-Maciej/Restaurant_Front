@@ -29,6 +29,30 @@ export default function ManagerTableGrid() {
 
   const [dataWaiter, setDataWaiter] = useState([]);
 
+  // BarSoldMealsForDate states
+  const [datePickedSoldMeals, setDatePickedSoldMeals] = useState(["test"]);
+  const [dateRangePickedSoldMeals, setDateRangePickedSoldMeals] = useState([]);
+  const [dateStartSoldMealsForDate, setStartSoldMealsForDate] = useState(1);
+  const [dateEndSoldMealsForDate, setEndSoldMealsForDate] = useState(1);
+
+  function changeDatePickedSoldMeals(data) {
+    // console.log("data 5 suwak");
+    // console.log(data);
+    setDatePickedSoldMeals(data);
+  }
+  function changeRangePickedSoldMeals(data) {
+    // console.log("data --RANGE--");
+    // console.log(data);
+    setDateRangePickedSoldMeals(data);
+  }
+
+  function changeDateStartEndForSoldMealsForDate(dateStart, dateEnd) {
+    // console.log("data --RANGE--");
+    // console.log(data);
+    setStartSoldMealsForDate(dateStart);
+    setEndSoldMealsForDate(dateEnd);
+  }
+
   useEffect(() => {
     setDataWaiter(TestDataWaiters);
 
@@ -97,9 +121,20 @@ export default function ManagerTableGrid() {
           {dishLoaded ? (
             <BoxContainer>
               <BoxItem>
-                <ManagerDateRange></ManagerDateRange>
-                <BarSoldMealsForDate data={dataDishDate} keys={dataNames} />
+                <ManagerDateRange
+                  setRangeDateState={changeRangePickedSoldMeals}
+                  setPickedDates={changeDatePickedSoldMeals}
+                />
+                <BarSoldMealsForDate
+                  dataRange={dateRangePickedSoldMeals}
+                  dataChosse={datePickedSoldMeals}
+                  dateStart={dateStartSoldMealsForDate}
+                  dateEnd={dateEndSoldMealsForDate}
+                  // dataRange={datePickedSoldMeals}
+                  // dataChosse={dateRangePickedSoldMeals}
+                />
               </BoxItem>
+              {/*  
               <BoxItem>
                 <ManagerDateRange></ManagerDateRange>
                 <BarWaitersEarnings data={dataWaiter} keys={testTableWaiters} />
@@ -218,6 +253,7 @@ export default function ManagerTableGrid() {
                   }}
                 />
               </BoxItem>
+              */}
             </BoxContainer>
           ) : (
             <div>Computing Data</div>

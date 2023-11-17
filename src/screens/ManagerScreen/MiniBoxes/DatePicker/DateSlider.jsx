@@ -41,12 +41,7 @@ const Slider = styled.input`
   }
 `;
 
-export default function DateSlider({
-  dateList,
-  sliderDates,
-  sliderPickedDateRange,
-  setSliderDateRange,
-}) {
+export default function DateSlider({ dateList, setSliderDateRange }) {
   // elements that return scoped dates
   // -2 0 +2
 
@@ -54,21 +49,20 @@ export default function DateSlider({
   const [listDates, setListDates] = useState([]);
   const [value, setValue] = useState(0);
 
-  const [pickedDates, setPickedDates] = useState([]);
   const [maxSliderValue, setMaxSliderValue] = useState(0);
 
   useEffect(() => {
     setListDates(dateList);
-    console.log(value);
+    // console.log("value");
+    // console.log(value);
     setMaxSliderValue(dateList.length - 5);
-
-    setSliderDateRange(pickedDates);
   }, [listDates, dateList]);
 
   useEffect(() => {
-    setPickedDates(returnIndexPickedBySlider(listDates, value));
+    setSliderDateRange(value);
   }, [value]);
 
+  // not used
   function returnIndexPickedBySlider(listObject, value) {
     const tempList = [
       listObject.at(Number(value)),
@@ -77,7 +71,8 @@ export default function DateSlider({
       listObject.at(Number(value) + 3),
       listObject.at(Number(value) + 4),
     ];
-    console.log(tempList);
+    // console.log("tempList");
+    // console.log(tempList);
     return tempList;
   }
 
@@ -93,8 +88,9 @@ export default function DateSlider({
         max={maxSliderValue}
         onChange={(e) => {
           setValue(e.target.value);
-
-          console.log(pickedDates);
+          // setSliderDateRange(pickedDates);
+          // console.log("pickedDates");
+          // console.log(pickedDates);
         }}
         style={getBackgroundSize()}
         value={value}
