@@ -21,6 +21,7 @@ const DateAndSliderBox = styled.div`
 export default function ManagerDateRange({
   setRangeDateState,
   setPickedDates,
+  disablePicker,
 }) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -80,10 +81,14 @@ export default function ManagerDateRange({
           <DatePickerComponent date={endDate} setDate={setEndDate} />
         </div>
       </DateBox>
-      <DateSlider
-        dateList={listOfPickedDates}
-        setSliderDateRange={setPickedDates}
-      />
+      {disablePicker ? (
+        <DateSlider
+          dateList={listOfPickedDates}
+          setSliderDateRange={setPickedDates}
+        />
+      ) : (
+        ""
+      )}
     </DateAndSliderBox>
   );
 }

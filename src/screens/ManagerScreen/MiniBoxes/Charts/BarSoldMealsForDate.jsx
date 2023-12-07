@@ -28,7 +28,6 @@ export default function BarSoldMealsForDate({
   const [error, setError] = useState(null);
 
   async function getSoldDishData() {
-    console.log("ping data");
     let dataPostRange = {
       startDate: dataRange[0],
       dateEnd: dataRange[1],
@@ -52,7 +51,6 @@ export default function BarSoldMealsForDate({
   }
 
   useEffect(() => {
-    console.log("refresh data");
     getSoldDishData();
     setLoaded(true);
   }, [dataRange[0], dataRange[1]]);
@@ -61,7 +59,6 @@ export default function BarSoldMealsForDate({
     // console.log("dataRange");
     // console.log(dataRange);
     // console.log("zmiana dataChosse");
-    console.log(dataChosse);
     setPickedDataSoldDish();
     getPickedData(dataChosse);
 
@@ -84,8 +81,6 @@ export default function BarSoldMealsForDate({
       dataSoldDish.at(Number(dataChosse) + 3),
       dataSoldDish.at(Number(dataChosse) + 4),
     ];
-
-    console.log(pickedRangeObjects);
 
     return pickedRangeObjects;
   }

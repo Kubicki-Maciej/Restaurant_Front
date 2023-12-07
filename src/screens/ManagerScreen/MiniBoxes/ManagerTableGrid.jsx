@@ -36,14 +36,25 @@ export default function ManagerTableGrid() {
   const [dateEndSoldMealsForDate, setEndSoldMealsForDate] = useState(1);
 
   function changeDatePickedSoldMeals(data) {
-    // console.log("data 5 suwak");
-    // console.log(data);
     setDatePickedSoldMeals(data);
   }
   function changeRangePickedSoldMeals(data) {
-    // console.log("data --RANGE--");
-    // console.log(data);
     setDateRangePickedSoldMeals(data);
+  }
+  //BarWaitersEarnings states
+  const [sliderDateRangeWaitersEarning, setSliderDateRangeWaitersEarning] =
+    useState([]);
+  const [sliderDatePickedWaitersEarning, setSliderDatePickedWaitersEarning] =
+    useState([]);
+
+  function changeRangeWaitersEarning(data) {
+    setSliderDateRangeWaitersEarning(data);
+  }
+  function changeDateWaiterEarning(data) {
+    console.log("***dataChosse***");
+    console.log("data --RANGE--");
+    console.log(data);
+    setSliderDatePickedWaitersEarning(data);
   }
 
   function changeDateStartEndForSoldMealsForDate(dateStart, dateEnd) {
@@ -109,9 +120,10 @@ export default function ManagerTableGrid() {
   const testTableWaiters = [
     { waiter_id: 1, waiter_name: "Maciej" },
     { waiter_id: 2, waiter_name: "Zysio" },
-    { waiter_id: 3, waiter_name: "Guzio" },
-    { waiter_id: 4, waiter_name: "Buzio" },
-    { waiter_id: 5, waiter_name: "Kazio" },
+    // { waiter_id: 3, waiter_name: "Guzio" },
+    // { waiter_id: 4, waiter_name: "Buzio" },
+    // { waiter_id: 5, waiter_name: "Kazio" },
+    // { waiter_id: 5, waiter_name: "Kazio" },
   ];
 
   return (
@@ -124,54 +136,36 @@ export default function ManagerTableGrid() {
                 <ManagerDateRange
                   setRangeDateState={changeRangePickedSoldMeals}
                   setPickedDates={changeDatePickedSoldMeals}
+                  disablePicker={true}
                 />
                 <BarSoldMealsForDate
                   dataRange={dateRangePickedSoldMeals}
                   dataChosse={datePickedSoldMeals}
                   dateStart={dateStartSoldMealsForDate}
                   dateEnd={dateEndSoldMealsForDate}
-                  // dataRange={datePickedSoldMeals}
-                  // dataChosse={dateRangePickedSoldMeals}
                 />
               </BoxItem>
-              {/*  
               <BoxItem>
-                <ManagerDateRange></ManagerDateRange>
-                <BarWaitersEarnings data={dataWaiter} keys={testTableWaiters} />
+                <ManagerDateRange
+                  setRangeDateState={changeRangeWaitersEarning}
+                  setPickedDates={changeDateWaiterEarning}
+                  disablePicker={false}
+                ></ManagerDateRange>
+                <BarWaitersEarnings
+                  dataChosse={sliderDateRangeWaitersEarning}
+                />
               </BoxItem>
+
               <BoxItem>
                 <BoxTitle>Active Orders:</BoxTitle>
-                <MiniOrder
-                  data={[
-                    { id: 1, bill: 250, waiter_id: 1 },
-                    { id: 2, bill: 190, waiter_id: 1 },
-                    { id: 3, bill: 37, waiter_id: 2 },
-                    { id: 4, bill: 607, waiter_id: 2 },
-                    { id: 5, bill: 225, waiter_id: 2 },
-                  ]}
-                />
+                <MiniOrder />
               </BoxItem>
+
               <BoxItem>
                 <BoxTitle>Kitchen Orders:</BoxTitle>
-                <MiniOrderBoard
-                  data={{
-                    waiting: [
-                      { id: 1, bill: 250, waiter_id: 1 },
-                      { id: 2, bill: 190, waiter_id: 1 },
-                      { id: 3, bill: 37, waiter_id: 2 },
-                      { id: 4, bill: 607, waiter_id: 2 },
-                      { id: 5, bill: 225, waiter_id: 2 },
-                    ],
-                    in_progress: [
-                      { id: 6, bill: 250, waiter_id: 1 },
-                      { id: 7, bill: 190, waiter_id: 1 },
-                      { id: 8, bill: 37, waiter_id: 2 },
-                      { id: 9, bill: 607, waiter_id: 2 },
-                      { id: 10, bill: 225, waiter_id: 2 },
-                    ],
-                  }}
-                />
+                <MiniOrderBoard />
               </BoxItem>
+
               <BoxItem>
                 <BoxTitle>Magazine Stock:</BoxTitle>
                 <BarMagazineStock
@@ -191,25 +185,25 @@ export default function ManagerTableGrid() {
                       },
                       {
                         id: 3,
-                        name: "chesse",
+                        name: "Becon",
                         quantity: 0.5,
                         good_stock_value: 5,
                       },
                       {
                         id: 4,
-                        name: "chesse",
+                        name: "Cabage",
                         quantity: 0.5,
                         good_stock_value: 5,
                       },
                       {
                         id: 5,
-                        name: "chesse",
+                        name: "Watter",
                         quantity: 0.5,
                         good_stock_value: 5,
                       },
                       {
                         id: 6,
-                        name: "chesse",
+                        name: "Cola",
                         quantity: 0.5,
                         good_stock_value: 5,
                       },
@@ -217,6 +211,7 @@ export default function ManagerTableGrid() {
                   }}
                 />
               </BoxItem>
+              {/*
               <BoxItem>
                 <BoxTitle>Waiters Logged In/Out: </BoxTitle>
                 <WaitersLoggedIn
