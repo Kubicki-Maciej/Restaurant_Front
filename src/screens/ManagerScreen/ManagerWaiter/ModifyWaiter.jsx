@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import EditWaiterRow from "./ManagerWaiterComponents/EditWaiterRow";
 import WaiterReadOnlyRow from "./ManagerWaiterComponents/WaiterReadOnlyRow";
 import {
@@ -8,29 +8,66 @@ import {
   RowTableWaiter,
   ChangeWaiterForm,
 } from "./ManagerWaiterComponents/ManagerWaiterStyle";
+import axios from "axios";
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
+
+const wd = [
+  {
+    id: 1,
+    name: "Maciej",
+    surrname: "Kubicki",
+    loginnumber: 1234,
+  },
+  {
+    id: 2,
+    name: "Aleksandra",
+    surrname: "G",
+    loginnumber: 7777,
+  },
+];
 
 export default function ModifyWaiter({ setSecondElement }) {
+  const [contacts, setContacts] = useState(wd);
+  const [waiterData, setWaiterData] = useState([]);
+  const [error, setError] = useState([]);
+  const [errorMessage, setErrorMessage] = useState([]);
+
+  async function GetWaiters() {
+    client
+      .get(`/api/get_user_information`)
+      .then((actualData) => {
+        setWaiterData(actualData.data);
+      })
+      .catch((err) => {
+        setError(true);
+        setErrorMessage(err);
+      })
+      .finally(() => {});
+  }
+
+  async function ChangeWaiter(data) {
+    client
+      .put(`/api/change_user_info`, data)
+      .then(() => {})
+      .catch((err) => {
+        setError(true);
+        setErrorMessage(err);
+      })
+      .finally(() => {});
+  }
+
+  useEffect(() => {
+    GetWaiters();
+  }, []);
+
   setSecondElement("> Modify Waiters Data");
-  const waiterData = [
-    {
-      id: 1,
-      name: "Maciej",
-      surrname: "Kubicki",
-      login_number: 1234,
-    },
-    {
-      id: 2,
-      name: "Aleksandra",
-      surrname: "G",
-      login_number: 7777,
-    },
-  ];
-  const [contacts, setContacts] = useState(waiterData);
 
   const [editFormData, setEditFormData] = useState({
-    name: "",
-    surrname: "",
-    login_number: "",
+    username: "",
+    loginnumber: "",
     password: "",
   });
 
@@ -38,8 +75,9 @@ export default function ModifyWaiter({ setSecondElement }) {
 
   const handleEditFormChange = (event) => {
     event.preventDefault();
-
+    console.log("zmiana nazwy");
     const fieldName = event.target.getAttribute("name");
+    console.log(fieldName);
     const fieldValue = event.target.value;
 
     const newFormData = { ...editFormData };
@@ -53,19 +91,23 @@ export default function ModifyWaiter({ setSecondElement }) {
 
     const editedContact = {
       id: editContactId,
-      name: editFormData.name,
-      surrname: editFormData.surrname,
-      login_number: editFormData.login_number,
+      username: editFormData.username,
+      loginnumber: editFormData.loginnumber,
       password: editFormData.password,
     };
+    console.log(editedContact);
 
-    const newContacts = [...contacts];
+    const newWaiterData = [...waiterData];
+    console.log(waiterData);
 
-    const index = contacts.findIndex((contact) => contact.id === editContactId);
+    const index = waiterData.findIndex(
+      (contact) => contact.id === editContactId
+    );
 
-    newContacts[index] = editedContact;
+    newWaiterData[index] = editedContact;
 
-    setContacts(newContacts);
+    ChangeWaiter(editedContact);
+    setWaiterData(newWaiterData);
     setEditContactId(null);
   };
 
@@ -74,9 +116,8 @@ export default function ModifyWaiter({ setSecondElement }) {
     setEditContactId(contact.id);
 
     const formValues = {
-      name: contact.name,
-      surrname: contact.surrname,
-      login_number: contact.login_number,
+      username: contact.username,
+      loginnumber: contact.loginnumber,
       password: contact.password,
     };
 
@@ -93,15 +134,14 @@ export default function ModifyWaiter({ setSecondElement }) {
         <TableWaiter>
           <thead>
             <tr>
-              <RowTableWaiter>Name</RowTableWaiter>
-              <RowTableWaiter>Surrname</RowTableWaiter>
+              <RowTableWaiter>Username</RowTableWaiter>
               <RowTableWaiter>Login Number</RowTableWaiter>
               <RowTableWaiter>Password</RowTableWaiter>
               <RowTableWaiter>Actions</RowTableWaiter>
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact) => (
+            {waiterData.map((contact) => (
               <Fragment>
                 {editContactId === contact.id ? (
                   <EditWaiterRow

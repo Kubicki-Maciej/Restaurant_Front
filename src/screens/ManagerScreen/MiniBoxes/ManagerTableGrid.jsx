@@ -51,8 +51,6 @@ export default function ManagerTableGrid() {
     setSliderDateRangeWaitersEarning(data);
   }
   function changeDateWaiterEarning(data) {
-    console.log("***dataChosse***");
-    console.log("data --RANGE--");
     console.log(data);
     setSliderDatePickedWaitersEarning(data);
   }
@@ -168,87 +166,13 @@ export default function ManagerTableGrid() {
 
               <BoxItem>
                 <BoxTitle>Magazine Stock:</BoxTitle>
-                <BarMagazineStock
-                  data={{
-                    products: [
-                      {
-                        id: 1,
-                        name: "beef_meat",
-                        quantity: 10.0,
-                        good_stock_value: 30,
-                      },
-                      {
-                        id: 2,
-                        name: "chesse",
-                        quantity: 0.5,
-                        good_stock_value: 5,
-                      },
-                      {
-                        id: 3,
-                        name: "Becon",
-                        quantity: 0.5,
-                        good_stock_value: 5,
-                      },
-                      {
-                        id: 4,
-                        name: "Cabage",
-                        quantity: 0.5,
-                        good_stock_value: 5,
-                      },
-                      {
-                        id: 5,
-                        name: "Watter",
-                        quantity: 0.5,
-                        good_stock_value: 5,
-                      },
-                      {
-                        id: 6,
-                        name: "Cola",
-                        quantity: 0.5,
-                        good_stock_value: 5,
-                      },
-                    ],
-                  }}
-                />
+                <BarMagazineStock />
               </BoxItem>
-              {/*
+
               <BoxItem>
                 <BoxTitle>Waiters Logged In/Out: </BoxTitle>
-                <WaitersLoggedIn
-                  data={{
-                    logged_in_waiters: [
-                      { id: 1, waiter_name: "Przemo" },
-                      { id: 2, waiter_name: "Maciej" },
-                    ],
-                    logged_out_waiters: [
-                      { id: 3, waiter_name: "Aleksandra" },
-                      { id: 4, waiter_name: "Kara" },
-                    ],
-                  }}
-                />
+                <WaitersLoggedIn />
               </BoxItem>
-              <BoxItem>
-                <BoxTitle>Daily Profit:</BoxTitle>
-                <ManagerDateRange></ManagerDateRange>
-                <DailyProfit
-                  data={{
-                    dates: [
-                      { date: "2023-09-20", profit: 5003 },
-                      { date: "2023-09-21", profit: 5401 },
-                      { date: "2023-09-22", profit: 6020 },
-                      { date: "2023-09-23", profit: 4550 },
-                      { date: "2023-09-24", profit: 4060 },
-                      { date: "2023-09-25", profit: 0 },
-                      { date: "2023-09-26", profit: 5301 },
-                      { date: "2023-09-27", profit: 5001 },
-                      { date: "2023-09-28", profit: 5501 },
-                      { date: "2023-09-29", profit: 6401 },
-                      { date: "2023-09-30", profit: 4401 },
-                    ],
-                  }}
-                />
-              </BoxItem>
-              */}
             </BoxContainer>
           ) : (
             <div>Computing Data</div>

@@ -1,6 +1,12 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import styled from "styled-components";
+import axios from "axios";
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
 
 const FormContainer = styled.div`
   display: flex;
@@ -61,21 +67,36 @@ const FormElementButton = styled.div`
 `;
 
 const initialValues = {
-  name: "",
+  username: "",
   surname: "",
+  email: "",
   initials: "",
   password: "",
   confirmPassword: "",
+  userType: "waiters",
 };
+
+// const initialValues = {
+//   name: "",
+//   surname: "",
+//   email: "",
+//   initials: "",
+//   password: "",
+//   confirmPassword: "",
+//   userType: "waiters",
+// };
 
 const validate = (values) => {
   const errors = {};
 
-  if (!values.name) {
-    errors.name = "Required";
+  if (!values.username) {
+    errors.username = "Required";
   }
   if (!values.surname) {
     errors.surname = "Required";
+  }
+  if (!values.email) {
+    errors.email = "Required";
   }
 
   if (!values.initials) {
@@ -98,11 +119,33 @@ const validate = (values) => {
   return errors;
 };
 
-const onSubmit = (values) => {
-  console.log(values);
-};
-
 export default function CreateWaiter({ setSecondElement }) {
+  const [dataOrders, setDataOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function registerWaiter(value) {
+    client
+      .post(`/api/register_waiter`, value)
+      .then((actualData) => {})
+      .catch((err) => {
+        setError(true);
+        setErrorMessage(err);
+      })
+      .finally(() => {});
+  }
+
+  const onSubmit = (values) => {
+    console.log(values);
+    const data = {
+      email: values.email,
+      username: values.username,
+      password: values.password,
+    };
+    registerWaiter(data);
+  };
+
   setSecondElement("> Create Waiter");
   return (
     <FormContainer>
@@ -113,11 +156,12 @@ export default function CreateWaiter({ setSecondElement }) {
       >
         {({ errors, touched }) => (
           <Form>
+            <div>{error ? "" : errorMessage}</div>
             <FormElementRow>
               <FormElement>
                 <FormLabel htmlFor="name">Name:</FormLabel>
-                <Field type="text" name="name" />
-                <ErrorMessage name="name" component="div" />
+                <Field type="text" name="username" />
+                <ErrorMessage name="username" component="div" />
               </FormElement>
               <FormElement>
                 <FormLabel htmlFor="surname">Surname:</FormLabel>
@@ -125,6 +169,13 @@ export default function CreateWaiter({ setSecondElement }) {
                 <ErrorMessage name="surname" component="div" />
               </FormElement>
             </FormElementRow>
+
+            <FormElement>
+              <FormLabel htmlFor="email">Email:</FormLabel>
+              <Field type="text" name="email" />
+              <ErrorMessage name="email" component="div" />
+            </FormElement>
+
             <FormElement>
               <FormLabel htmlFor="initials">Login Number:</FormLabel>
               <Field type="text" name="initials" />

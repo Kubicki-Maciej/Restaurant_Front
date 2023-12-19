@@ -1,6 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "axios";
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
 
 const MiniOrderMainBox = styled.div`
   display: flex;
@@ -32,20 +37,37 @@ const Dot = styled.div`
 `;
 
 export default function WaitersLoggedIn({ data }) {
-  const [dataOrder, setDataOrder] = useState({
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [dataWaiter, setDataWaiter] = useState({
     logged_in_waiters: [],
     logged_out_waiters: [],
   });
 
+  async function GetWaitersLogin() {
+    client
+      .get(`/dashboard/get_waiters_status`)
+      .then((acutalData) => {
+        setDataWaiter(acutalData.data);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setDataWaiter(null);
+      })
+      .finally(() => {
+        setLoading(true);
+      });
+  }
+
   useEffect(() => {
-    setDataOrder(data);
-  }, [dataOrder]);
+    GetWaitersLogin();
+  }, []);
 
   return (
     <MiniOrderMainBox>
       <WaiterBox>
         <h5>Logged In</h5>
-        {dataOrder.logged_in_waiters.map((waiter) => {
+        {dataWaiter.logged_in_waiters.map((waiter) => {
           return (
             <WaiterRow>
               {waiter.waiter_name}
@@ -56,7 +78,7 @@ export default function WaitersLoggedIn({ data }) {
       </WaiterBox>
       <WaiterBox>
         <h5>Logged Out</h5>
-        {dataOrder.logged_out_waiters.map((waiter) => {
+        {dataWaiter.logged_out_waiters.map((waiter) => {
           return (
             <WaiterRow>
               {waiter.waiter_name}

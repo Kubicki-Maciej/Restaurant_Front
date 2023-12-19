@@ -4,9 +4,8 @@ import { ColumnTableWaiter, Button } from "./ManagerWaiterStyle";
 export default function WaiterReadOnlyRow({ contact, handleEditClick }) {
   return (
     <tr>
-      <ColumnTableWaiter>{contact.name}</ColumnTableWaiter>
-      <ColumnTableWaiter>{contact.surrname}</ColumnTableWaiter>
-      <ColumnTableWaiter>{contact.login_number}</ColumnTableWaiter>
+      <ColumnTableWaiter>{contact.username}</ColumnTableWaiter>
+      <ColumnTableWaiter>{contact.loginnumber}</ColumnTableWaiter>
       <ColumnTableWaiter>****</ColumnTableWaiter>
 
       <ColumnTableWaiter>

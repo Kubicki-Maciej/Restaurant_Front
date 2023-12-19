@@ -27,7 +27,6 @@ export default function WaiterCard({ setSecondElement }) {
           { direction: "./modify", title: "Modify Waiter Data" },
         ]}
       />
-
       <Routes>
         <Route
           path="createwaiter"

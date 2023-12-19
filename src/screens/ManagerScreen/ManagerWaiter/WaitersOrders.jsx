@@ -3,6 +3,11 @@ import { useState, useEffect } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
 import styled from "styled-components";
+import axios from "axios";
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
 
 const DataGridBox = styled.div`
   display: flex;
@@ -13,48 +18,33 @@ const DataGridBox = styled.div`
 // const VISIBLE_FIELDS = ["name", "rating", "country", "dateCreated", "isAdmin"];
 
 export default function WaitersOrders({ setSecondElement }) {
-  const [dataOrders, setDataOrders] = useState([]);
+  const [waiterOrders, setWaiterOrders] = useState({});
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   setSecondElement("> Waiters Orders");
+
   useEffect(() => {
-    setDataOrders(dataCreation());
-    setLoading(true);
+    console.log("PING");
+    GetWaiterOrders();
   }, []);
 
-  const dataT = [
-    {
-      id: 1,
-      waiter_id: 1,
-      order_id: 1,
-      waiter_name: "Maciej",
-      table: 25,
-      order_value: 25.99,
-    },
-    {
-      id: 2,
-      waiter_id: 1,
-      order_id: 1,
-      waiter_name: "Ola",
-      table: 25,
-      order_value: 25.99,
-    },
-    {
-      id: 3,
-      waiter_id: 1,
-      order_id: 1,
-      waiter_name: "Kasia",
-      table: 25,
-      order_value: 25.99,
-    },
-    {
-      id: 4,
-      waiter_id: 1,
-      order_id: 1,
-      waiter_name: "Przemek",
-      table: 25,
-      order_value: 25.99,
-    },
-  ];
+  async function GetWaiterOrders() {
+    client
+      .get(`/waiter/get_waiters_orders`)
+      .then((acutalData) => {
+        console.log(acutalData.data);
+        setWaiterOrders(acutalData.data);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setWaiterOrders(null);
+      })
+      .finally(() => {
+        setLoading(true);
+      });
+  }
+
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -89,14 +79,8 @@ export default function WaitersOrders({ setSecondElement }) {
       width: "50px",
     },
     {
-      field: "waiter_surrname",
-      headerName: "waiter_surrname",
-      flex: 0.3,
-      width: "0.2",
-    },
-    {
-      field: "order_value",
-      headerName: "order_value",
+      field: "total_meal_cost",
+      headerName: "total_meal_cost",
       flex: 0.2,
       width: "0.2",
     },
@@ -114,11 +98,12 @@ export default function WaitersOrders({ setSecondElement }) {
       },
     },
   ];
+
   if (loading) {
     return (
       <DataGridBox>
         <DataGrid
-          rows={dataOrders}
+          rows={waiterOrders}
           columns={columns}
           initialState={{
             pagination: {

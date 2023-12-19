@@ -8,33 +8,24 @@ export default function EditWaiterRow({
 }) {
   return (
     <tr>
-      <ColumnTableWaiter>
+      <ColumnTableWaiter>{editFormData.username}</ColumnTableWaiter>
+      {/* <ColumnTableWaiter>
         <input
           type="text"
           required="required"
           placeholder="Change a name..."
-          name="name"
-          value={editFormData.name}
+          name="username"
+          value={editFormData.username}
           onChange={handleEditFormChange}
         ></input>
-      </ColumnTableWaiter>
-      <ColumnTableWaiter>
-        <input
-          type="text"
-          required="required"
-          placeholder="Change an surrname..."
-          name="surrname"
-          value={editFormData.surrname}
-          onChange={handleEditFormChange}
-        ></input>
-      </ColumnTableWaiter>
+      </ColumnTableWaiter> */}
       <ColumnTableWaiter>
         <input
           type="text"
           required="required"
           placeholder="Change a login number..."
-          name="login_number"
-          value={editFormData.login_number}
+          name="loginnumber"
+          value={editFormData.loginnumber}
           onChange={handleEditFormChange}
         ></input>
       </ColumnTableWaiter>
@@ -48,7 +39,6 @@ export default function EditWaiterRow({
           onChange={handleEditFormChange}
         ></input>
       </ColumnTableWaiter>
-
       <ColumnTableWaiter>
         <Button type="submit">Save</Button>
         <Button type="button" onClick={handleCancelClick}>
