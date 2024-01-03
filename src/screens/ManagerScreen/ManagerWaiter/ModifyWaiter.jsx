@@ -51,7 +51,9 @@ export default function ModifyWaiter({ setSecondElement }) {
   async function ChangeWaiter(data) {
     client
       .put(`/api/change_user_info`, data)
-      .then(() => {})
+      .then(() => {
+        console.log("Zmiana nazwydwa");
+      })
       .catch((err) => {
         setError(true);
         setErrorMessage(err);
