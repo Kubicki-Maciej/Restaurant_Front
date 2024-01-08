@@ -1,26 +1,36 @@
 import React from "react";
 import { useState } from "react";
+import axios from "axios";
 
-export default function CategoryTable({ categoryType, categoryTypeName }) {
-  const [selectedOptions, setSelectedOptions] = useState([]);
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
 
-  const handleChange = (selected) => {
-    setSelectedOptions(selected);
-  };
+export default function CategoryTable({
+  categoryType,
+  categoryTypeName,
+  changeIt,
+}) {
+  const [selectedOptions, setSelectedOptions] = useState(categoryType);
+  console.log(categoryType);
 
   return (
     <div>
       {categoryTypeName}:
       <ul>
-        {categoryType.map((option) => (
-          <li key={option.value}>
-            {option.name}{" "}
+        {selectedOptions.map((option) => (
+          <li key={option.id}>
+            {option.category_name}{" "}
             <button
-              onClick={() =>
+              // onClick={() => changeIt(option.id)}
+              onClick={() => {
+                changeIt(option.id);
+
                 setSelectedOptions((prevSelected) =>
-                  prevSelected.filter((item) => item.value !== option.value)
-                )
-              }
+                  prevSelected.filter((item) => item.id !== option.id)
+                );
+                console.log(selectedOptions);
+              }}
             >
               Remove
             </button>

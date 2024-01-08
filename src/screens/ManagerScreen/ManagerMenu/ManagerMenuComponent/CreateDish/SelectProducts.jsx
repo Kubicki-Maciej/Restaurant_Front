@@ -10,6 +10,8 @@ export default function SelectProducts({
   productList,
   chosedProducts,
   productTypes,
+  setProductUsed,
+  productUsed,
 }) {
   const [userChoice, setUserChoice] = useState([]);
 
@@ -32,6 +34,8 @@ export default function SelectProducts({
       <SelectedProductTable
         selectedProducts={userChoice}
         productTypes={productTypes}
+        setProductUsed={setProductUsed}
+        productUsed={productUsed}
       ></SelectedProductTable>
     </div>
   );

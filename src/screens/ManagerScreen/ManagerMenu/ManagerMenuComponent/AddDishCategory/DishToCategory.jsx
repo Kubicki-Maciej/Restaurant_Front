@@ -2,9 +2,14 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Select from "react-select";
 
-export default function DishToCategory({ category, returneddish, list }) {
+export default function DishToCategory({
+  category,
+  submit,
+  list,
+  selectedMeal,
+}) {
   const [dishCategory, setDishCategory] = useState("");
-  const [listDish, setListDish] = useState([]);
+
   const [selectedDish, setSelectedDish] = useState("");
   const [dish, setDish] = useState("");
 
@@ -18,8 +23,6 @@ export default function DishToCategory({ category, returneddish, list }) {
 
   useEffect(() => {
     setDishCategory(category);
-    setListDish(createDishList());
-    console.log(listDish);
   }, []);
 
   return (
@@ -31,16 +34,24 @@ export default function DishToCategory({ category, returneddish, list }) {
         isClearable={true}
         isSearchable={true}
         name="color"
-        options={listDish}
+        options={list}
         onChange={(choice) => {
           if (choice === null) {
-            setDish({ value: "", label: "" });
+            setDish({ id: "", value: "", label: "", dish_name: "" });
           } else {
             setDish(choice);
+            selectedMeal(choice);
           }
         }}
       />
-      <button onClick={() => returneddish()}>Add To Category</button>
+
+      <button
+        onClick={() => {
+          submit();
+        }}
+      >
+        Add To Category
+      </button>
     </div>
   );
 }

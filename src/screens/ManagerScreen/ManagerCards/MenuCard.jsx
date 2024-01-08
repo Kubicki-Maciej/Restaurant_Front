@@ -8,7 +8,7 @@ import AddDishCategory from "../ManagerMenu/AddDishCategory";
 import ChangeDish from "../ManagerMenu/ChangeDish";
 import CreateCategory from "../ManagerMenu/CreateCategory";
 import Createdish from "../ManagerMenu/Createdish";
-import HideCategory from "../ManagerMenu/HideCategory";
+
 import RemoveDishFromCategory from "../ManagerMenu/RemoveDishFromCategory";
 import ShowCategory from "../ManagerMenu/ShowCategory";
 
@@ -34,7 +34,6 @@ export default function MenuCard({ setSecondElement }) {
             direction: "./removedishfromcategory",
             title: "Remove Dish from Category",
           },
-          { direction: "./hidecategory", title: "Hide categories" },
           { direction: "./showcategory", title: "Show categories" },
         ]}
       />
@@ -61,10 +60,6 @@ export default function MenuCard({ setSecondElement }) {
           element={
             <RemoveDishFromCategory setSecondElement={setSecondElement} />
           }
-        ></Route>
-        <Route
-          path="hidecategory"
-          element={<HideCategory setSecondElement={setSecondElement} />}
         ></Route>
         <Route
           path="showcategory"

@@ -5,6 +5,8 @@ import ProductInTable from "./ProductInTable";
 export default function SelectedProductTable({
   selectedProducts,
   productTypes,
+  setProductUsed,
+  productUsed,
 }) {
   return (
     <div>
@@ -20,10 +22,15 @@ export default function SelectedProductTable({
         <tbody>
           {selectedProducts.map((product) => {
             const matchingItem = productTypes.find(
-              (item) => item.id === product.value
+              (item) => item.id === product.id
             );
             return (
-              <ProductInTable product={product} productInfo={matchingItem} />
+              <ProductInTable
+                product={product}
+                productInfo={matchingItem}
+                setProductUsed={setProductUsed}
+                productUsed={productUsed}
+              />
             );
           })}
         </tbody>

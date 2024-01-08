@@ -10,6 +10,11 @@ import {
   FormButton,
   FormBox,
 } from "./ManagerMenuComponent/ManagerMenuStyle";
+import axios from "axios";
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
 
 const validate = (values) => {
   const errors = {};
@@ -24,10 +29,21 @@ const initialValues = {
 };
 
 export default function CreateCategory() {
+  const [err, setErr] = useState("");
+
+  function CreateCategory(dataCategory) {
+    client
+      .post(`/dashboard/create_category`, dataCategory)
+      .then(() => {})
+      .catch(() => {
+        setErr(err);
+      })
+      .finally(() => {});
+  }
+
   const onSubmit = (values) => {
     // send here new product to backend
-    console.log("values");
-    console.log(values);
+    CreateCategory(values);
   };
 
   return (
@@ -43,9 +59,7 @@ export default function CreateCategory() {
           <ErrorMessage name="categoryName"></ErrorMessage>
 
           <FormElementButton>
-            <FormButton type="submit" onClick={() => onSubmit()}>
-              Create Category
-            </FormButton>
+            <FormButton type="submit">Create Category</FormButton>
           </FormElementButton>
         </FormElement>
       </Form>

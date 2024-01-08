@@ -10,6 +10,11 @@ import {
   FormButton,
   FormBox,
 } from "../ManagerMenu/ManagerMenuComponent/ManagerMenuStyle";
+import axios from "axios";
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
 
 const validate = (values) => {
   const errors = {};
@@ -19,6 +24,11 @@ const validate = (values) => {
   }
 };
 
+const options = [
+  { value: "KG", label: "Kilograms" },
+  { value: "P", label: "Pices" },
+];
+
 const initialValues = {
   productName: "",
 };
@@ -26,8 +36,17 @@ const initialValues = {
 export default function NewProduct() {
   const onSubmit = (values) => {
     // send here new product to backend
-    console.log("values");
-    console.log(values);
+    const optionValue = document.getElementById("option").value;
+    const product = {
+      product_name: values.productName,
+      product_type: optionValue,
+    };
+    client
+      .post(`/dashboard/create_product`, product)
+      .catch(() => {
+        console.log("cant create object");
+      })
+      .finally(() => {});
   };
 
   return (
@@ -42,10 +61,20 @@ export default function NewProduct() {
           <Field type="text" name="productName"></Field>
           <ErrorMessage name="productName"></ErrorMessage>
 
+          <Field name="option" as="select" className="option-select">
+            {() => (
+              <select id="option" required>
+                {options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            )}
+          </Field>
+          <ErrorMessage name="option"></ErrorMessage>
           <FormElementButton>
-            <FormButton type="submit" onClick={() => onSubmit()}>
-              Create Storage
-            </FormButton>
+            <FormButton type="submit">Create Product</FormButton>
           </FormElementButton>
         </FormElement>
       </Form>

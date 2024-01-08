@@ -3,6 +3,38 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useState, useEffect } from "react";
 import TableComponents from "./ManagerMenuComponent/RemoveDishFromCategory/TableComponents";
+import axios from "axios";
+
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
+
+function labelConverterCategory(data) {
+  const tempList = [];
+  data.forEach((element) => {
+    tempList.push({
+      id: element.id,
+      value: element.id,
+      label: element.category_name,
+      category_name: element.category_name,
+    });
+  });
+  return tempList;
+}
+
+function labelConverterDish(data) {
+  const tempList = [];
+  data.forEach((element) => {
+    tempList.push({
+      id: element.id,
+      value: element.id,
+      label: element.meal_name,
+      dish_name: element.meal_name,
+    });
+  });
+
+  return tempList;
+}
 
 const categoryMenuTest = [
   {
@@ -23,72 +55,101 @@ const categoryMenuTest = [
   },
 ];
 
-function convertCategorysToSelect(selectedList) {
-  const tempList = [];
-  selectedList.forEach((item) => {
-    tempList.push({ value: item.id, label: item.name });
-  });
-  return tempList;
-}
-
-function getListDishes(idCategory) {
-  const category = categoryMenuTest.find(
-    (category) => category.id === idCategory
-  );
-  return category.meals;
-}
-
 export default function RemoveDishFromCategory() {
-  const [selectedCategory, setSelectedCategory] = useState({});
-  const [isCategorySelected, setIsCategorySelected] = useState(false);
   const [category, setCategory] = useState();
-  const [categorySelected, setCategorySelected] = useState(false);
-  const [categoryId, setCategoryId] = useState("");
-  const [categoryDishes, setCategoryDishes] = useState([]);
 
-  return (
-    <div>
-      {" "}
-      <Select
-        className="basic-single"
-        classNamePrefix="select"
-        isClearable={true}
-        isSearchable={true}
-        name="color"
-        options={convertCategorysToSelect(categoryMenuTest)}
-        onChange={(choice) => {
-          if (choice === null) {
-            setCategory({ value: "", label: "" });
-            setCategorySelected(false);
-          } else {
-            setCategory(choice);
-            setCategorySelected(true);
-            setCategoryId(choice.value);
-            setCategoryDishes(getListDishes(choice.value));
-          }
-        }}
-      />
-      {categorySelected ? (
-        <div>
-          wybrana{categoryDishes.name}
-          {/* <Select
-            isMulti
-            isClearable={true}
-            isSearchable={true}
-            defaultValue={convertCategorysToSelect(categoryDishes)}
-            onChange={(choice) => {
-              if (choice === null) {
-                console.log(choice.value);
-              } else {
-                console.log(choice.value);
+  const [listDish, setListDish] = useState([]);
+  const [listCategory, setListCategory] = useState([]);
+  const [isLoadingCategory, setIsLoadingCategory] = useState(true);
+  const [categorySelected, setCategorySelected] = useState(false);
+
+  useEffect(() => {
+    GetCategorys();
+  }, []);
+
+  useEffect(() => {
+    console.log(listDish);
+    if (listDish.length != 0) {
+      setCategorySelected(true);
+    } else {
+      setCategorySelected(false);
+    }
+  }, [listDish]);
+
+  useEffect(() => {}, [categorySelected]);
+
+  function GetCategorys() {
+    client
+      .get(`/dashboard/get_categorys`)
+      .then((actualData) => {
+        setListCategory(labelConverterCategory(actualData.data));
+      })
+      .catch(() => {})
+      .finally(() => {
+        setIsLoadingCategory(false);
+      });
+  }
+
+  function GetDishes(categoryInfo) {
+    const category = { id_category: categoryInfo.id };
+
+    client
+      .post(`/dashboard/get_dishes_in_category`, category)
+      .then((actualData) => {
+        setListDish(labelConverterDish(actualData.data));
+      })
+      .catch(() => {})
+      .finally(() => {
+        console.log(listDish);
+      });
+  }
+
+  function DeleteMealInCategory() {
+    setCategorySelected(false);
+  }
+
+  function ChangeSelection() {
+    setCategorySelected(!categorySelected);
+  }
+
+  if (isLoadingCategory) {
+    return <div>Loading</div>;
+  } else {
+    return (
+      <div>
+        {" "}
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          isClearable={true}
+          isSearchable={true}
+          name="color"
+          options={listCategory}
+          onChange={(choice) => {
+            if (choice === null) {
+              setCategory({ value: "", label: "" });
+              setListDish([]);
+              setCategorySelected(false);
+            } else {
+              console.log(category);
+              if (category) {
+                if (category.id !== choice.id) {
+                  setCategorySelected(false);
+                }
               }
-            }}
-          /> */}
-          <TableComponents list={convertCategorysToSelect(categoryDishes)} />
-        </div>
-      ) : (
-        <div>kategoria niewybrana</div>
-      )}
-    </div>
-  );
+              setCategory(choice);
+              GetDishes(choice);
+            }
+          }}
+        />
+        {categorySelected ? (
+          <div>
+            <TableComponents list={listDish} selectedCategory={category} />
+          </div>
+        ) : (
+          <div>kategoria niewybrana</div>
+        )}
+      </div>
+    );
+  }
 }

@@ -2,33 +2,17 @@ import React from "react";
 import Select from "react-select";
 import { useState, useEffect } from "react";
 import CategoryTable from "./ManagerMenuComponent/Category/CategoryTable";
+import axios from "axios";
 
-const categoryMenuTest = [
-  {
-    id: 1,
-    name: "Burgers",
-    meals: [
-      { name: "Hamburger", id: 1 },
-      { name: "ChesseHamburger", id: 2 },
-    ],
-    isShow: true,
-  },
-  {
-    id: 2,
-    name: "Starters",
-    meals: [
-      { name: "Fries", id: 3 },
-      { name: "ChesseFries", id: 4 },
-    ],
-    isShow: true,
-  },
-];
+const client = axios.create({
+  baseURL: "http://127.0.0.1:8000/",
+});
 
 function splitCategorys(element) {
   const tempListSelected = [];
   const tempListUnselected = [];
   element.forEach((category) => {
-    if (category.isShow) {
+    if (category.category_show) {
       tempListSelected.push(category);
     } else {
       tempListUnselected.push(category);
@@ -43,26 +27,71 @@ export default function ShowCategory() {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [unselectedCategory, setUnselectedCategory] = useState([]);
 
+  const [listCategory, setListCategory] = useState([]);
+  const [isLoadingCategory, setIsLoadingCategory] = useState(true);
+
+  function GetCategorys() {
+    client
+      .get(`/dashboard/get_categorys`)
+      .then((actualData) => {
+        setListCategory(actualData.data);
+        const splitedCategorys = splitCategorys(actualData.data);
+        setSelectedCategory(splitedCategorys.selected);
+        setUnselectedCategory(splitedCategorys.unselected);
+      })
+      .catch(() => {})
+      .finally(() => {
+        setIsLoadingCategory(false);
+      });
+  }
+
+  function UpdateCategory(categoryId) {
+    const data = { category_id: categoryId };
+    setIsLoadingCategory(true);
+    client
+      .post(`/dashboard/hide_show_category`, data)
+      .then((actualData) => {
+        setListCategory(actualData.data);
+        const splitedCategorys = splitCategorys(actualData.data);
+        setSelectedCategory(splitedCategorys.selected);
+        setUnselectedCategory(splitedCategorys.unselected);
+      })
+      .catch(() => {
+        console.log("problem with category change");
+      })
+      .finally(() => {
+        setIsLoadingCategory(false);
+      });
+  }
+  function HideShowCategory(CategoryId) {
+    UpdateCategory(CategoryId);
+    console.log(CategoryId);
+  }
+
   useEffect(() => {
-    const splitedCategorys = splitCategorys(categoryMenuTest);
-    setSelectedCategory(splitedCategorys.selected);
-    setUnselectedCategory(splitedCategorys.unselected);
+    GetCategorys();
   }, []);
 
-  return (
-    <div>
+  if (isLoadingCategory) {
+    return <div>Loading</div>;
+  } else {
+    return (
       <div>
-        <CategoryTable
-          categoryType={selectedCategory}
-          categoryTypeName={"Selected"}
-        />
+        <div>
+          <CategoryTable
+            categoryType={selectedCategory}
+            categoryTypeName={"Selected"}
+            changeIt={HideShowCategory}
+          />
+        </div>
+        <div>
+          <CategoryTable
+            categoryType={unselectedCategory}
+            categoryTypeName={"Unselected"}
+            changeIt={HideShowCategory}
+          />
+        </div>
       </div>
-      <div>
-        <CategoryTable
-          categoryType={unselectedCategory}
-          categoryTypeName={"Unselected"}
-        />
-      </div>
-    </div>
-  );
+    );
+  }
 }

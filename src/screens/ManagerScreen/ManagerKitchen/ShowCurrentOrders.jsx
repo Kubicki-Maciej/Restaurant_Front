@@ -22,10 +22,6 @@ export default function ShowCurrentOrders({ setSecondElement }) {
         setOrders(actualData.data);
         setOrdersInProgress(actualData.data.in_progress);
         setOrdersWaiting(actualData.data.waiting);
-        console.log(actualData.waiting);
-        console.log("actualData.data");
-        console.log(actualData);
-        console.log(actualData.in_progress);
       })
       .catch((err) => {
         console.log(err);
