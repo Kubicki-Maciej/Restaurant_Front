@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import SelectProducts from "../CreateDish/SelectProducts";
-import MiniTable from "./MiniTableProducts";
+import MiniTable from "./_MiniTableProducts";
 
 export default function SelectedDish({
   product,

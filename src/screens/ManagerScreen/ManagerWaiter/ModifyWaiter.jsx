@@ -97,10 +97,8 @@ export default function ModifyWaiter({ setSecondElement }) {
       loginnumber: editFormData.loginnumber,
       password: editFormData.password,
     };
-    console.log(editedContact);
 
     const newWaiterData = [...waiterData];
-    console.log(waiterData);
 
     const index = waiterData.findIndex(
       (contact) => contact.id === editContactId

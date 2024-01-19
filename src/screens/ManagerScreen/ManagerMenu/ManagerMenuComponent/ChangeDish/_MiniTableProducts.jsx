@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-import ProductRow from "./ProductRow";
+import ProductRow from "./_ProductRow";
 
 const animatedComponents = makeAnimated();
 
