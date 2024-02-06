@@ -22,6 +22,7 @@ const ScreenMain = styled.div`
   /* display: flex; */
   /* flex-wrap: row; */
 `;
+
 const ScreenMenu = styled.div`
   padding-right: ${menuSpaceWidth};
   padding-top: ${menuSpaceWidth};
@@ -30,7 +31,6 @@ const ScreenMenu = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
 `;
-// waiter
 
 export default function MenuScreen({ client }) {
   const categorySelection = useSelector((state) => state.waiterCategory);

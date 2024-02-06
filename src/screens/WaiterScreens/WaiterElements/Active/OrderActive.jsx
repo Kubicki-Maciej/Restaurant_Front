@@ -21,7 +21,9 @@ const BoxOrder = styled.div`
   flex-direction: column;
   margin: 0.5rem;
   height: auto;
+  border-radius: 15px;
 `;
+
 const OrderName = styled.p`
   font-size: 1rem;
 `;

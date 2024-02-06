@@ -14,6 +14,7 @@ const MainPage = styled.div`
 const OrderPage = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   /* overflow-x: auto; */
 `;
 
@@ -46,8 +47,8 @@ export default function ActiveOrderScreen({ client }) {
   }, [dataOrders, orders]);
 
   return (
-    <div className="waiterApp">
-      <h1> ORDERS :</h1>
+    <div className="orderApp">
+      <h1> ORDERS:</h1>
       <MainPage>
         <OrderPage>
           {orders.map((order, index) => {
