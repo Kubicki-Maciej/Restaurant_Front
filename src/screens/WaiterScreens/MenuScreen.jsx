@@ -30,6 +30,7 @@ const ScreenMenu = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
 `;
+// waiter
 
 export default function MenuScreen({ client }) {
   const categorySelection = useSelector((state) => state.waiterCategory);
