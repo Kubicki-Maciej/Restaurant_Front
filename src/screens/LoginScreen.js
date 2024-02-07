@@ -14,6 +14,7 @@ import {
   SlideButton,
   FormBox,
   MainWindow,
+  ButtonEasyLoginPanel,
 } from "./style/LoginScreenElements";
 import restaurantImg from "../images/restaurant.jpg";
 
@@ -219,18 +220,20 @@ export default function LoginScreen() {
               <SlideButton variant="primary" type="submit">
                 <span>Login</span>
               </SlideButton>
-              <AutomaticLogin
-                buttonName={"waiter"}
-                navigateTo={goToTestWaiter}
-              />
-              <AutomaticLogin
-                buttonName={"kitchen"}
-                navigateTo={goToTestKitchen}
-              />
-              <AutomaticLogin
-                buttonName={"manager"}
-                navigateTo={goToTestManager}
-              />
+              <ButtonEasyLoginPanel>
+                <AutomaticLogin
+                  buttonName={"waiter"}
+                  navigateTo={goToTestWaiter}
+                />
+                <AutomaticLogin
+                  buttonName={"kitchen"}
+                  navigateTo={goToTestKitchen}
+                />
+                <AutomaticLogin
+                  buttonName={"manager"}
+                  navigateTo={goToTestManager}
+                />
+              </ButtonEasyLoginPanel>
             </FormBox>
           </LoginWindow>
         </WindowContainer>
