@@ -41,10 +41,8 @@ export default function MiniOrderBoard({ data }) {
   function ReturnDataOrderElements(element) {
     let orderList = [];
     element.forEach((order) => {
-      let cost = 0;
-      order.meal.forEach((meal) => (cost += meal.total_meal_cost));
+      let cost = order.total_meal_cost;
       orderList.push({ id: order.order_id, bill: cost });
-      // tempList.push({ id: order.order_id, bill: cost, waiterId });
     });
     return orderList;
   }
@@ -53,8 +51,6 @@ export default function MiniOrderBoard({ data }) {
     client
       .get(`/dashboard/s`)
       .then((acutalData) => {
-        console.log("data---------");
-        console.log(acutalData);
         setDataOrder(DataCompiler(acutalData));
       })
       .catch((err) => {
