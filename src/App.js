@@ -17,7 +17,8 @@ function App() {
           <Route path="/kitchen" element={<KitchenScreen />} />
           <Route path="/waiter/*" element={<WaiterScreen />} />
           <Route path="/manager/*" element={<ManagerScreen />} />
-          <Route path="/login" element={<LoginScreen />} />
+          <Route path="/" element={<LoginScreen />} />
+          {/* <Route path="/login" element={<LoginScreen />} /> */}
           <Route path="/register" element={<LoginScreen />} />
         </Routes>
       </BrowserRouter>

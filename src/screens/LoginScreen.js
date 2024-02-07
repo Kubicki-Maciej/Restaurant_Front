@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import AutomaticLogin from "../components/LoginComponents/AutomaticLogin";
 // style
 import {
   LoginWindow,
@@ -110,6 +111,58 @@ export default function LoginScreen() {
     });
   }
 
+  function goToTestKitchen() {
+    let kitchenUser = {
+      id: 6,
+      role: "kitchen",
+      status: "regular",
+      last_login: null,
+      username: "kitchentest",
+      groups_name: [
+        {
+          name: "kitchen",
+        },
+      ],
+      groups: [2],
+    };
+    dispatch(loginUser());
+    dispatch(getUserData(kitchenUser));
+    navigate("/kitchen");
+  }
+
+  function goToTestWaiter() {
+    let waiterUser = {
+      id: 5,
+      role: "waiters",
+      status: "regular",
+      last_login: null,
+      username: "waitertest",
+      groups_name: [
+        {
+          name: "waiters",
+        },
+      ],
+      groups: [1],
+    };
+    dispatch(loginUser());
+    dispatch(getUserData(waiterUser));
+    navigate("/waiter");
+  }
+  function goToTestManager() {
+    let waiterUser = {
+      id: 8,
+      role: "manager",
+      status: "regular",
+      last_login: null,
+      username: "managertest",
+      groups_name: [],
+      groups: [],
+    };
+    dispatch(loginUser());
+    dispatch(getUserData(waiterUser));
+    navigate("/manager");
+  }
+
   if (currentUser) {
     console.log(dataUserSelection);
     if (dataUserSelection.role === "kitchen") {
@@ -166,6 +219,18 @@ export default function LoginScreen() {
               <SlideButton variant="primary" type="submit">
                 <span>Login</span>
               </SlideButton>
+              <AutomaticLogin
+                buttonName={"waiter"}
+                navigateTo={goToTestWaiter}
+              />
+              <AutomaticLogin
+                buttonName={"kitchen"}
+                navigateTo={goToTestKitchen}
+              />
+              <AutomaticLogin
+                buttonName={"manager"}
+                navigateTo={goToTestManager}
+              />
             </FormBox>
           </LoginWindow>
         </WindowContainer>
