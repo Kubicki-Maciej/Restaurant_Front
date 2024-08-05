@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Kubicki-Maciej.github.io/Restaurant_Front/static/css/main.7247e5f2.css",
+    "main.js": "/Kubicki-Maciej.github.io/Restaurant_Front/static/js/main.2b8b7674.js",
+    "static/js/787.cda612ba.chunk.js": "/Kubicki-Maciej.github.io/Restaurant_Front/static/js/787.cda612ba.chunk.js",
+    "static/media/restaurant.jpg": "/Kubicki-Maciej.github.io/Restaurant_Front/static/media/restaurant.ac8b162f5cddd04965fe.jpg",
+    "index.html": "/Kubicki-Maciej.github.io/Restaurant_Front/index.html",
+    "main.7247e5f2.css.map": "/Kubicki-Maciej.github.io/Restaurant_Front/static/css/main.7247e5f2.css.map",
+    "main.2b8b7674.js.map": "/Kubicki-Maciej.github.io/Restaurant_Front/static/js/main.2b8b7674.js.map",
+    "787.cda612ba.chunk.js.map": "/Kubicki-Maciej.github.io/Restaurant_Front/static/js/787.cda612ba.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7247e5f2.css",
+    "static/js/main.2b8b7674.js"
+  ]
+}
