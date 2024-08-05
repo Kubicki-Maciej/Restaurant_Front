@@ -20,7 +20,7 @@ export default function NewOrderScreen({ client }) {
     if (isSelectedItemsInMenu) {
     }
   }, [isSelectedItemsInMenu]);
-  //   useEffect;
+
 
   if (isCleared) {
     console.log("SHOULD RUN");
@@ -32,7 +32,7 @@ export default function NewOrderScreen({ client }) {
   async function goToMenu() {
     navigate("../menu");
   }
-  // if order is selected or last order isn't submited ask if u sure to createnew order
+
   function isOrderActive() {
     if (waiterOrderSelected.exsist) {
       setisSelectedItemsInMenu(true);
@@ -42,7 +42,6 @@ export default function NewOrderScreen({ client }) {
 
   if (isSelectedItemsInMenu) {
     return (
-      // maybe do it in popout ? or just center this ?
       <div>
         <h2>Is current order selected do you want create new one </h2>
         <div>

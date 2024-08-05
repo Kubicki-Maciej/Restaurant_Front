@@ -105,8 +105,6 @@ export default function MealOrderActive({ mealObj, isOpen, orderId }) {
     dispatch(updateProductFromOrder(meal));
   }, [meal]);
 
-  // create to update it on REDUX
-  // create API SEND
 
   return (
     <MealWrap>

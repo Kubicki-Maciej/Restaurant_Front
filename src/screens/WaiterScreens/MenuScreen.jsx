@@ -8,7 +8,7 @@ import {
 } from "./WaiterElements/Menu/style/ButtonWaiter";
 
 import CategoryButton from "./WaiterElements/Menu/CategoryButton";
-// import ItemButton from "./WaiterElements/Menu/ItemButton";
+
 import ItemButton from "./WaiterElements/Menu/ItemButton";
 
 // for dispatch to menu
@@ -19,8 +19,7 @@ const ScreenMain = styled.div`
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* display: flex; */
-  /* flex-wrap: row; */
+
 `;
 
 const ScreenMenu = styled.div`

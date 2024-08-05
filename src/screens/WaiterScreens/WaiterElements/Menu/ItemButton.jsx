@@ -13,11 +13,7 @@ export default function ItemButton({ itemObject }) {
   const itemObj = itemObject;
   const dispatch = useDispatch();
 
-  // console.log(categoryObj);
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
 
-  // const categorySelection = useSelector(state=>state.waiterOrder)
 
   function handleClick() {
     console.log(itemObj);

@@ -29,7 +29,7 @@ export default function MiniOrderSideBar({ client }) {
   }
 
   function createNewOrder() {
-    // need to check if order exist
+
     const postData = {
       order: orderData,
       waiter: userData,
@@ -51,8 +51,7 @@ export default function MiniOrderSideBar({ client }) {
       });
   }
 
-  //   maybe after clicking it pop out big window with order then get option to send ?
-  // create statment that check if its new order or selected order
+
   return (
     <MiniOrderContainer>
       {specificOrderData.exsist ? (

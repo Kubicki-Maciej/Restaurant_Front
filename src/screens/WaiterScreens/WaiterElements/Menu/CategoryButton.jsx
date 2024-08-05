@@ -9,7 +9,6 @@ export default function CategoryButton({ categoryObject }) {
   console.log("obiekt category button");
   const categoryObj = categoryObject;
 
-  // console.log(categoryObj);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -21,7 +20,7 @@ export default function CategoryButton({ categoryObject }) {
     localStorage.setItem("myOrderData", {
       Kategoria: categoryObj.category_name,
     });
-    // navigate(`${categoryObj.category_name}`);
+
     console.log(categoryObj["all_meal_in_category"]);
     dispatch(goToCategory(categoryObj));
   }

@@ -44,21 +44,6 @@ function WaiterScreens() {
   const [order, setOrder] = useState([]);
   const [user, setUser] = useState([]);
 
-  // const fetchData = async () =>{
-  //   try{
-  //     const response = await client.get('meals/all_category');
-  //     setCategoryData(response.data);
-  //     console.log(response.data);
-  //     setLoading(false)
-  //     setLoad(true)
-  //   } catch(error){
-  //     setError(error)
-  //   }
-  // }
-
-  // useEffect(()=>{
-  //   fetchData();
-  // },[])
 
   return (
     <MainScreen>

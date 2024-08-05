@@ -85,7 +85,7 @@ export default function OrderActive({ item, client }) {
               }
             })}
           </div>
-          {/* Do logic here */}
+
         </BoxOrder>
       }
       modal
@@ -96,7 +96,7 @@ export default function OrderActive({ item, client }) {
           {isLoadedDataFromRedux ? getOrderData() : ""}
           <button onClick={() => close()}>CLOSE</button>
           <OrderPopOut client={client} />
-          {/* <ChangeOrder onClick={() => getOrderData()}>Add Meal</ChangeOrder> */}
+          
         </div>
       )}
     </Popup>

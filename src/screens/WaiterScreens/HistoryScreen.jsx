@@ -127,7 +127,7 @@ export default function HistoryScreen({ client }) {
           rows={converData(data)}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
-          // onRowSelectionModelChange={(itm) => setGameSelected(itm)}
+          
         />
       </Box>
     );
