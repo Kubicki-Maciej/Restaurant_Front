@@ -40,7 +40,7 @@ function MainManagerScreen() {
   return (
     <div>
       <ManagerNavbar secondScope={secondElement} />
-      {/* Mini bars */}
+
       <ConntentScreen>
         <Routes>
           <Route
@@ -62,20 +62,6 @@ function MainManagerScreen() {
           <Route path="storage/*" element={<StorageCard />}></Route>
         </Routes>
       </ConntentScreen>
-      {/* create user section */}
-      {/* Create new kitchen, waiter user if permisions */}
-      {/* Check section */}
-      {/* Check waiter order active / ended */}
-      {/* Check what product is gonna expire */}
-      {/* Check active orders */}
-      {/* Check orders in ### day */}
-      {/* Storage data */}
-      {/* Add Section */}
-      {/* Add Dish */}
-      {/* Add Product */}
-      {/* Add product to storage/ update quantity*/}
-
-      {/* Boxes with information sales, graphs, tranding product etc*/}
     </div>
   );
 }
